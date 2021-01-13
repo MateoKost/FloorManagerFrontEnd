@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+
+.floorGrid {
+  display: grid;
+  grid-template-areas:
+    'r0 r4 s0 r8 r10 r14 s1 r18 r22'
+    'r2 r6 s0 r8 r12 r16 s1 r20 r22'
+    'c0 c0 c0 c0 c0 c0 c0 c0 c0'
+    'r1 r5 c1 r9 r11 r15 c2 r19 r23'
+    'r3 r7 c1 r9 r13 r17 c2 r21 r23'
+    ;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+
+
+.floorGrid > .room {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 10;
+    /*width: 40px;
+    height: 40px;
+    float: left;*/
+}
+
+.floorGrid > .room {
+  background-color: rgba(205, 205, 255, 0.8);
+  text-align: center;
+  font-size: 10;
+  /*width: 40px;
+  height: 40px;
+  float: left;*/
+}
+
+
+.floorGrid > .staircase{
+  background-color: rgba(105, 205, 155, 0.8);
+  text-align: center;
+  font-size: 10;
+  /*width: 40px;
+  height: 40px;
+  float: left;*/
+}
