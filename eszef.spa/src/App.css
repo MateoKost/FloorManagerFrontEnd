@@ -50,14 +50,14 @@
     'r1 r5 c1 r9 r11 r15 c2 r19 r23'
     'r3 r7 c1 r9 r13 r17 c2 r21 r23'
     ;
-    background-color: #2196F3;
+    /* background-color: #2196F3; */
     padding: 10px;
 }
 
 
 
 .floorGrid > .room {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(145, 76, 76, 0.8);
     text-align: center;
     font-size: 10;
     /*width: 40px;
