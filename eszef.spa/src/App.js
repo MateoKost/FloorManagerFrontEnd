@@ -26,6 +26,8 @@ import { faPlus, faTrash, faPen,
 // import axios from 'axios';
 
 
+import AutoSlider from './Components/AutoSlider';
+
 import { Alert } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Component } from 'react';
@@ -53,29 +55,11 @@ class App extends Component {
         itemName: '',
       },
       addedItem: false,
+      deletedItem: false,
       newItemModal: false,
       editItemModal: false,
-      alertVisibility:true,
-
-      // itemNames:[
-      //   "Lampka", 
-      //   "Krzesło",
-      //   "Gaśnica",
-      //   "Szafa",
-      //   "Czajnik",
-      //   "Komoda",
-      //   "Łóżko",
-      //   "Biurko",
-      //   "Regał",
-      //   "Apteczka",
-      //   "Dokumentacja",
-      //   "Szafka z kluczami",
-      //   "Serwer",
-      //   "Miotła",
-      //   "Szczotka",
-      //   "Śmietnik"
-      // ],
-
+      alertVisibility: true,
+      alertVisibilityDeleted: true,
       itemNames:[
         { name:"Lampka",   faIcon: <FontAwesomeIcon icon={faLightbulb} />},
         { name:"Krzesło", faIcon:<FontAwesomeIcon icon={faChair} />},
@@ -98,26 +82,8 @@ class App extends Component {
   }
 
   componentDidMount(){
-    // axios.get('http://localhost:3000/items').then((response) => {
-    //   this.setState({ 
-    //     items: response 
-    //   })
-    // });
-
-   this.getItems();
-
-
+     this.getItems();
   }
-
-  /*
-getItems = async () => {
-  await fetch('http://localhost:1234/items',{method: 'GET', mode: 'cors', credentials: 'omit'})
-  .then(response => {return response.json();})
-  // .then(response => {return JSON.stringify(response);})
-  .then(response => {console.log('BEFORE',response); {return response.data}})
-  .then(response => {this.setState({ items: response })})
-  .catch(err => console.error(err))
-}*/
 
 getItems = async() => {
   await axios.get("https://localhost:5001/item").then(response => {  
@@ -153,11 +119,6 @@ toggleEditItemModal(){
 
 addItem = async () => {
   const { newItemData, items } = this.state;
-
-  // await axios.post('https://localhost:5001/item',{
-  //     itemName: newItemData.itemName, 
-  //     idRoom: newItemData.idRoom
-  // });
   let params2 = {
     "itemName": newItemData.itemName,  
     "idRoom": parseInt(newItemData.idRoom)
@@ -179,52 +140,17 @@ addItem = async () => {
             idRoom: newItemData.idRoom,
             itemName: newItemData.itemName,
           },
+          alertVisibility: true,
           addedItem: true,
         });
   });
 
-  // await axios.post(`https://localhost:5001/item?itemName=${newItemData.itemName}&idRoom=${newItemData.idRoom}`).then( _ => {
-  //   this.getItems()
-  //   this.setState({ 
-      
-  //     newItemModal: false,  
-  //     items, 
-  //     newItemData: {
-  //       idItem: '',
-  //       idRoom: '',
-  //       itemName: '',
-  //     }
-  //   });
-  // });
 };
 
-
-// addItem = async () => {
-//   const { newItemData, items } = this.state;
-//   await fetch(`http://localhost:1234/items/add?idItem=${newItemData.idItem}&idRoom=${newItemData.idRoom}&itemName=${newItemData.itemName}`, {
-//     //method: 'POST', mode: 'cors', credentials: 'omit', body: JSON.stringify(this.state.newItemData)
-//   }).then( _ => {
-//     this.getItems();
-//     //console.log(response.data)
-//     //const { items } = this.state;
-//     //items.push(response.data);
-//     this.setState({ 
-      
-//       newItemModal: false,  
-//       items, 
-//       newItemData: {
-//         idItem: '',
-//         idRoom: '',
-//         itemName: '',
-//       }
-//     });
-//   });
-// };
 
 editItem = async () =>{
   const { editItemData, items } = this.state;
   await fetch(`http://localhost:1234/items/edit?id=${editItemData.id}&idRoom=${editItemData.idRoom}&itemName=${editItemData.itemName}`, {
-    //method: 'POST', mode: 'cors', credentials: 'omit', body: JSON.stringify(this.state.newItemData)
   }).then(response=>{
     console.log(response.data)
     this.getItems();
@@ -244,26 +170,18 @@ editItem = async () =>{
 deleteItem = async ({id}) =>{
   const { items } = this.state;
   await axios.delete(`https://localhost:5001/item/${id}`).then( _ => {
+    const dataById = items.find( item => item.id === id );
+    this.setState({      
+        addedData:dataById,
+        deletedItem: true,
+        alertVisibilityDeleted: true,
+      });
     this.getItems();
-
-
-        });
+      });
   };
 
   onDismiss = () => this.setState({ alertVisibility:false });
-// deleteItem = async ({idItem}) =>{
-//   const { items } = this.state;
-//   await fetch(`http://localhost:1234/items/delete?idItem=${idItem}`, {
-//     //method: 'POST', mode: 'cors', credentials: 'omit', body: JSON.stringify(this.state.newItemData)
-//   }).then(response=>{
-//     this.getItems();
-//     console.log(response.data)
-//     this.setState({ 
-//       items
-//     });
-//   });
-// };
-
+  onDismissDeleted = () => this.setState({ alertVisibilityDeleted:false });
 
 
 renderRow = ({ id, idRoom, itemName }) => 
@@ -282,43 +200,27 @@ renderRow = ({ id, idRoom, itemName }) =>
   </tr>
 
   render() {
-    const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames } = this.state;
+    const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames, deletedItem, alertVisibilityDeleted } = this.state;
   return (
     <div className="App conta">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
 
       <NavMenu />
-  
+      <AutoSlider />
       { addedItem &&  <Alert color="success" isOpen={alertVisibility} toggle={this.onDismiss}>
         Dodano <b>{addedData.itemName}</b> do pokoju nr <b>{addedData.idRoom}</b>.
       </Alert> 
       }
+
+      { deletedItem &&  <Alert color="warning" isOpen={alertVisibilityDeleted} toggle={this.onDismissDeleted}>
+        Usunięto <b>{addedData.itemName}</b> z pokoju nr <b>{addedData.idRoom}</b>.
+      </Alert> 
+      }
     
+      <Button color="dark" className="p-4" onClick={this.toggleNewItemModal.bind(this)}> ZALOGUJ SIĘ  </Button>
       <Button color="primary" onClick={this.toggleNewItemModal.bind(this)}><FontAwesomeIcon icon={faPlus} /> Dodaj nowe wyposażenie</Button>
       <Modal isOpen={newItemModal} toggle={this.toggleNewItemModal.bind(this)} >
         <ModalHeader toggle={this.toggleNewItemModal.bind(this)}>Dodaj nowe wyposażenie</ModalHeader>
         <ModalBody>
-          {/* <FormGroup>
-
-            <Label for="id">Identyfikator</Label>
-            <Input required type="text" name="id" id="id" placeholder="Identyfikator" value={newItemData.id} onChange={(e) => {
-              newItemData.id = e.target.value;
-              this.setState({ newItemData });
-            }}/>
-          </FormGroup> */}
           <FormGroup>
             <Label for="idRoom">Pomieszczenie</Label>
             <Input type="number" name="idRoom" id="idRoom" placeholder="Pomieszczenie"value={newItemData.idRoom} onChange={(e) => {
@@ -326,12 +228,6 @@ renderRow = ({ id, idRoom, itemName }) =>
               this.setState({ newItemData });
             }}/>
           </FormGroup>
-          {/* <FormGroup>
-            <Label for="category">Kategoria</Label>
-            <Input type="select" name="category" id="category">
-                 { itemNames.map(  (item,i) => <option key={i}>{item.name}</option>  ) }
-            </Input>
-          </FormGroup>               */}
           <FormGroup>
             <Label for="itemName">Nazwa</Label>
             <Input required type="select" name="itemName" id="itemName" placeholder="Nazwa" value={newItemData.itemName} onChange={(e) => {
@@ -340,15 +236,7 @@ renderRow = ({ id, idRoom, itemName }) =>
             }}>
                  { itemNames.map(  (item,i) => <option key={i}>{item.name}</option>  ) }
             </Input>
-            
           </FormGroup>
-          {/* <FormGroup>
-            <Label for="itemName">Nazwa</Label>
-            <Input required type="text" name="itemName" id="itemName" placeholder="Nazwa" value={newItemData.itemName} onChange={(e) => {
-              newItemData.itemName = e.target.value;
-              this.setState({ newItemData });
-            }}/>
-          </FormGroup> */}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={this.addItem.bind(this)}>Zatwierdź</Button>{' '}
