@@ -23,6 +23,8 @@ class FloorManager extends Component {
       super(props);
       this.state = {
         items: [],
+        roomItems: [],
+        selectedRoomId: "",
         newItemData: {
           id: '',
           idRoom: '',
@@ -77,6 +79,16 @@ class FloorManager extends Component {
           });  
   }
   
+  getRoomItems = async(roomId) => {
+    // const { roomItems, selectedRoomId } = this.state;
+    await axios.get("https://localhost:5001/room/"+parseInt(roomId) ).then(response => {  
+    //   console.log(response.data)  
+    // console.log(response.data.items)
+                this.setState({  
+                roomItems: response.data.items 
+              });  
+          });  
+  }
   
   toggleNewItemModal(){
     this.setState({
@@ -183,12 +195,33 @@ class FloorManager extends Component {
       </td>
     </tr>
   
+
+  selectRoom = ( roomId ) => {
+    // console.log(roomId);
+    this.setState({
+      selectedRoomId: roomId
+    });
+    this.getRoomItems(roomId);
+  };
+
+
     render() {
-      const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames, deletedItem, alertVisibilityDeleted } = this.state;
+      const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames, deletedItem, alertVisibilityDeleted, selectedRoomId,
+        roomItems
+       } = this.state;
     return (
       <div>
           <div class="row">
-          <div className="col-lg-6"> <FloorGrid /></div>
+          <div className="col-lg-6"> <FloorGrid  
+          selectRoom={this.selectRoom}
+          // dedeFG={(e) => {
+          //   // newItemData.idRoom = e.target.value;
+          //   // this.setState({ newItemData });
+          //   //console.log(e);
+          // }
+         // }
+          // onClick={this.toggleSelectRoom}
+          /></div>
           <div className="col-lg-6"> 
 
         { addedItem &&  <Alert color="success" isOpen={alertVisibility} toggle={this.onDismiss}>
@@ -267,6 +300,9 @@ class FloorManager extends Component {
           </ModalFooter>
         </Modal>
   
+        <h1> { selectedRoomId }  </h1>
+        
+
         <Table>
           <thead>
             <tr>
@@ -278,6 +314,28 @@ class FloorManager extends Component {
             </tr>
           </thead>
           <tbody>
+
+              
+
+              { roomItems.map(this.renderRow) }
+          </tbody>
+        </Table>
+
+
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pomieszczenie</th>
+              <th>Nazwa</th>
+              <th>Ikona</th>
+              <th>Akcje</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              
+
               { items.map(this.renderRow) }
           </tbody>
         </Table>

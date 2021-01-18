@@ -8,6 +8,11 @@ import { faStar, faShieldAlt, faToilet, faStream, faCrown, faShower, faPhone
 const SingleRoom = (props) => {
     const [roomFocused, setRoomFocused] = useState(false);
     const [roomActive, setRoomActive] = useState(false);
+
+    function selectRoom( roomId ) {
+        props.selectRoom(props.number);
+    };
+
     return (
       <button
         className="room"
@@ -19,9 +24,10 @@ const SingleRoom = (props) => {
           onBlur = {() => setRoomFocused(false)}
           onMouseEnter = {() => setRoomActive(true)}
           onMouseLeave = {() => setRoomActive(false)}
+          onClick= {selectRoom.bind(this)}
+          // onClick={() => props.onClick(props.number)}
           >
 
-        
         { props.type==="HQ" 
           ? <FontAwesomeIcon icon={faCrown} />
           : props.type==="armoury" ?  <FontAwesomeIcon icon={faShieldAlt} />
