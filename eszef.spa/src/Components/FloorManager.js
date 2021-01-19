@@ -22,9 +22,17 @@ class FloorManager extends Component {
     constructor(props){
       super(props);
       this.state = {
+       
         items: [],
-        roomItems: [],
-        selectedRoomId: "",
+
+        selectedRoomData: {
+          roomItems: [],
+          roomSoldiers: [],
+          roomId: '',
+        },
+  
+        selectedRoomId:'',
+
         newItemData: {
           id: '',
           idRoom: '',
@@ -83,9 +91,13 @@ class FloorManager extends Component {
     // const { roomItems, selectedRoomId } = this.state;
     await axios.get("https://localhost:5001/room/"+parseInt(roomId) ).then(response => {  
     //   console.log(response.data)  
-    // console.log(response.data.items)
                 this.setState({  
-                roomItems: response.data.items 
+                  selectedRoomData: {
+                    roomItems: response.data.items,
+                    roomSoldiers: response.data.soldiers,
+                    roomId: roomId,
+                  }
+                  
               });  
           });  
   }
@@ -196,18 +208,34 @@ class FloorManager extends Component {
     </tr>
   
 
+  renderSoldier = ({ idSoldier, name, lastName, rank, idRoom }) => 
+  <tr key={ idSoldier }>
+    <td>{rank}</td>
+    <td>{name}</td>
+    <td>{lastName}</td>
+    <td>{idRoom }</td>
+      
+    <td>
+      <Button color="success" size="sm" className="mr-2" onClick={this.setEditItemData.bind(this, idSoldier, name, lastName, rank, idRoom)}>
+        <FontAwesomeIcon icon={faPen} /></Button>
+      <Button color="danger" size="sm" onClick={this.deleteItem.bind(this, {idSoldier})}>
+        <FontAwesomeIcon icon={faTrash} /></Button>
+    </td>
+  </tr>
+ 
+
   selectRoom = ( roomId ) => {
     // console.log(roomId);
     this.setState({
-      selectedRoomId: roomId
+        selectedRoomId: roomId
     });
     this.getRoomItems(roomId);
   };
 
 
     render() {
-      const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames, deletedItem, alertVisibilityDeleted, selectedRoomId,
-        roomItems
+      const { items, newItemModal, newItemData,  addedData, editItemData, editItemModal, addedItem, alertVisibility, itemNames, deletedItem, alertVisibilityDeleted, 
+        selectedRoomData, selectedRoomId
        } = this.state;
     return (
       <div>
@@ -234,7 +262,7 @@ class FloorManager extends Component {
         </Alert> 
         }
       
-       
+
         <Button color="primary" onClick={this.toggleNewItemModal.bind(this)}><FontAwesomeIcon icon={faPlus} /> Dodaj nowe wyposażenie</Button>
         <Modal isOpen={newItemModal} toggle={this.toggleNewItemModal.bind(this)} >
           <ModalHeader toggle={this.toggleNewItemModal.bind(this)}>Dodaj nowe wyposażenie</ModalHeader>
@@ -306,18 +334,22 @@ class FloorManager extends Component {
         <Table>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Pomieszczenie</th>
-              <th>Nazwa</th>
-              <th>Ikona</th>
-              <th>Akcje</th>
+             <th>Stopień</th> <th>Imię</th> <th>Nazwisko</th> <th>Pokój</th> <th>Akcje</th>
             </tr>
           </thead>
           <tbody>
+              { selectedRoomData.roomSoldiers.map(this.renderSoldier) }
+          </tbody>
+        </Table>
 
-              
-
-              { roomItems.map(this.renderRow) }
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th> <th>Pomieszczenie</th> <th>Nazwa</th> <th>Ikona</th> <th>Akcje</th>
+            </tr>
+          </thead>
+          <tbody>
+              { selectedRoomData.roomItems.map(this.renderRow) }
           </tbody>
         </Table>
 
