@@ -19,7 +19,7 @@ const FloorGrid = (props) => {
 <div className="floorGrid"
     // onClick={() => props.onClick.bind(this, 1)}
 >
-
+   
     {[...Array(24).keys()].map(number => (
               <SingleRoom
                 key={number}              
@@ -58,7 +58,7 @@ const FloorGrid = (props) => {
             ))}
 
 
-    <h1>{roomActiveId}</h1>
+    {/* <h1>{roomActiveId}</h1> */}
 </div>
 
 )

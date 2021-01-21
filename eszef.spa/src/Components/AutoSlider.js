@@ -9,8 +9,13 @@ import {
 
 import '../LP.css';
 
+
+
+
+
 //const coffee = process.env.PUBLIC_URL + '/Assets/coffee.jpg';
 const wp = process.env.PUBLIC_URL + '/Assets/wp.jpg';
+
 //const wp2 = process.env.PUBLIC_URL + '/Assets/wp2.jpg';
 //const soldier = process.env.PUBLIC_URL + '/Assets/man.jpg';
 const wood = process.env.PUBLIC_URL + '/Assets/wood.jpg';

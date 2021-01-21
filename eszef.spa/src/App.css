@@ -83,3 +83,42 @@
   height: 40px;
   float: left;*/
 }
+
+
+
+
+.badge{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 55px;
+  width: 150px;
+  background: #343A40;
+  display :block;
+  color:#343A40;
+}
+
+.badge:empty {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 55px;
+  width: 150px;
+  background: #202426;
+  display :block;
+}
+
+.neigh {
+  float: left;
+  display: block;
+  width:155px;
+  margin-bottom: 5px;
+}
+
+
+.logo {
+  widows: 40px;
+  height: 40px;
+  margin-right: 10px;
+}

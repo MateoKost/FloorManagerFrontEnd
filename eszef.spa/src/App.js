@@ -1,10 +1,9 @@
 import './App.css';
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 
 import { Button } from 'reactstrap';
 
-import NavMenu from './Components/NavMenu';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Component } from 'react';
@@ -18,7 +17,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-  
+      history: useHistory,
   }
 }
 
@@ -33,18 +32,10 @@ getItems = async() => {
   render() {
   return (
     <div className="App conta">
-
-      <Router>
-
-      <NavMenu />
       <Switch>
-
-      <Route exact path="/" component={LandingPage} />
-      <Route path="/manage" component={FloorManager} />
-
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/manage" component={FloorManager} />
       </Switch>
-
-      </Router>
     </div>
   );
 }
