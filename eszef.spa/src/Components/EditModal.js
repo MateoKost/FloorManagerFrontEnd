@@ -57,10 +57,7 @@ class EditModal extends Component {
           <ModalBody>
             <FormGroup>
               <Label for="id">Identyfikator</Label>
-              <Input type="text" name="id" id="id"  value={editItemData.id} onChange={(e) => {
-                editItemData.id = e.target.value;
-                this.setState({ editItemData });
-              }}/>
+              <Input type="text" name="id" id="id"  value={editItemData.id} disabled={true} />
             </FormGroup>
             <FormGroup>
               <Label for="idRoom">Pomieszczenie</Label>
@@ -70,18 +67,8 @@ class EditModal extends Component {
               }}/>
             </FormGroup>
             <FormGroup>
-              <Label for="category">Kategoria</Label>
-              <Input type="select" name="category" id="category">
-                <option>1</option>
-  
-              </Input>
-            </FormGroup>              
-            <FormGroup>
               <Label for="itemName">Nazwa</Label>
-              <Input type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editItemData.itemName} onChange={(e) => {
-                editItemData.itemName = e.target.value;
-                this.setState({ editItemData });
-              }}/>
+              <Input type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editItemData.itemName} disabled={true}/>
             </FormGroup>
           </ModalBody>
           <ModalFooter>

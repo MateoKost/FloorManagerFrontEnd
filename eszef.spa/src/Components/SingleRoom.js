@@ -62,7 +62,7 @@ const styles = {
     //backgroundColor: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     fontSize: '10',
-    backgroundColor: focused | active ? '#73462C' : '#A69C68',
+    backgroundColor: focused | active ? '#73462C' : '#C3EDB6',
 
     gridArea: number,
     /*width: 40px;

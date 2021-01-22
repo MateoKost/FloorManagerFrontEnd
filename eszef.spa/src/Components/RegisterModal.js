@@ -8,12 +8,9 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-class SignInModal extends Component {
+class RegisterModal extends Component {
   constructor(props) {
     super(props);
-
-    
-
     this.state = {
       loginData:{
         email:null,
@@ -21,30 +18,24 @@ class SignInModal extends Component {
       },
       login:false,
       store:null,
-
-      signInModal: props.signInModal,
+      registerModal: props.registerModal,
       onCancel: props.onCancel,
-
-
     };
   }
-
-
 
   componentDidMount() {
     this.storeCollector()
   }
 
-  toggleSignInModal() {
+  toggleRegisterModal() {
     this.state.onCancel();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      signInModal: nextProps.signInModal,
+      registerModal: nextProps.registerModal,
     });
   }
-
 
   storeCollector()
   {
@@ -64,6 +55,7 @@ class SignInModal extends Component {
      //  "email": "adam@wp.pl",
       //"password": "123456"
     };
+
     console.log(loginParams);
     axios.post('https://localhost:5001/login', loginParams) 
       .then((result)=>{
@@ -104,16 +96,32 @@ class SignInModal extends Component {
   }
 
 
+  register = async () =>{
+
+
+    let registerParams = {
+      "email": this.state.loginData.email,
+      "password": this.state.loginData.password
+     //  "email": "adam@wp.pl",
+      //"password": "123456"
+    };
+
+    axios.post('https://localhost:5001/register', registerParams ).then((response) => {
+      if(response.status === 200) this.login();
+    });
+  }
+
+
   render() {
-    const { signInModal, loginData } = this.state;
+    const { registerModal, loginData } = this.state;
 
     return (
       <div>
         {  this.state.store && <Redirect from="/" to="/manage/floor" /> }
 
-        <Modal isOpen={signInModal}>
+        <Modal isOpen={registerModal}>
           <ModalHeader cssModule={{ "modal-title": "w-100 text-center" }}>
-            Zaloguj
+            Zarejestruj swoje konto
           </ModalHeader>
           <ModalBody>
             <FormGroup>
@@ -149,11 +157,11 @@ class SignInModal extends Component {
             <Button
               color="success"
               className="btn-lg  btn-block"
-              onClick={()=>{this.login()}}
+              onClick={()=>{this.register()}}
             >
-              Zaloguj się
+              Zarejestruj się
             </Button>
-            <span className="text-center pt-3"> Zaloguj się przez </span>
+            <span className="text-center pt-3"> Zarejestruj się przez </span>
             <GoogleLoginButton />
             <FacebookLoginButton />
             <div className="text-center">
@@ -166,7 +174,7 @@ class SignInModal extends Component {
             {/* <Button color="primary" >Add</Button>{' '} */}
             <Button
               color="secondary"
-              onClick={this.toggleSignInModal.bind(this)}
+              onClick={this.toggleRegisterModal.bind(this)}
             >
               Anuluj
             </Button>
@@ -177,5 +185,5 @@ class SignInModal extends Component {
     );
   }
 }
-export default SignInModal;
+export default RegisterModal;
   

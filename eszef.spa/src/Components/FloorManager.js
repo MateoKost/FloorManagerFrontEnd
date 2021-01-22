@@ -8,6 +8,7 @@ import {
   faTrash,
   faPen,
   faChair,
+  faHammer
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -22,9 +23,7 @@ import AddModal from "./AddModal";
 import EditModal from "./EditModal";
 import FloorGrid from "./FloorGrid";
 import Workshop from "./Workshop";
-
 import NMLoggedIn from "./NMLoggedIn";
-
 
 
 import { 
@@ -40,7 +39,7 @@ class FloorManager extends Component {
     this.state = {
       token: token,
       items: [],
-
+      soldiers: [],
       selectedRoomData: {
         roomItems: [],
         roomSoldiers: [],
@@ -79,16 +78,28 @@ class FloorManager extends Component {
   }
 
   componentDidMount() {
-    // this.setState({
-    //     token:token2
-    // })
     this.getItems();
-    //
+    this.getSoldiers();
   }
 
-  getItems = async () => {
-    //let token = "Bearer " +JSON.parse(localStorage.getItem('login')).store;
 
+  getSoldiers = async () => {
+    await axios
+      .get("https://localhost:5001/soldier", {
+        headers: {
+          Authorization: this.state.token,
+        },
+      })
+      .then((response) => {
+        this.setState({
+          soldiers: response.data,
+        });
+      });
+  };
+
+
+
+  getItems = async () => {
     await axios
       .get("https://localhost:5001/item", {
         headers: {
@@ -111,7 +122,6 @@ class FloorManager extends Component {
         },
       })
       .then((response) => {
-        //   console.log(response.data)
         this.setState({
           selectedRoomData: {
             roomItems: response.data.items,
@@ -234,8 +244,8 @@ class FloorManager extends Component {
   onDismiss = () => this.setState({ alertVisibility: false });
   onDismissDeleted = () => this.setState({ alertVisibilityDeleted: false });
 
-  renderRow = ({ id, idRoom, itemName }) => (
-    <tr key={id}>
+  renderRow = ({ id, idRoom, itemName, isRepaired }) => (
+    <tr key={id} style={  { backgroundColor: !isRepaired && '#FFF3DB'} }  >
       <td>{id}</td>
       <td>{idRoom}</td>
       <td>{itemName}</td>
@@ -246,8 +256,17 @@ class FloorManager extends Component {
           <FontAwesomeIcon icon={faChair} />
         )}
       </td>
-
+      <td>{isRepaired ? "1" : "0"}</td>
       <td>
+      <Button disabled={isRepaired}
+          color="warning"
+          size="sm"
+          className="mr-2"
+          onClick={this.setEditItemData.bind(this, id, idRoom, itemName)}
+        >
+          <FontAwesomeIcon icon={faHammer} />
+        </Button>
+
         <Button
           color="success"
           size="sm"
@@ -302,7 +321,6 @@ class FloorManager extends Component {
   );
 
   selectRoom = (roomId) => {
-    // console.log(roomId);
     this.setState({
       selectedRoomId: roomId,
     });
@@ -311,7 +329,7 @@ class FloorManager extends Component {
 
   render() {
     const {
-      items,
+      items, soldiers,
       addedData,
       addedItem,
       alertVisibility,
@@ -323,10 +341,7 @@ class FloorManager extends Component {
 
     return (
       <div >
-        <NMLoggedIn />
-        <Switch>
-          <Route path="/manage/workshop" component={Workshop} />
-        </Switch>
+
 
         <div className="row" >
         <div className="col-lg-2"></div>
@@ -357,14 +372,12 @@ class FloorManager extends Component {
           </div>
           <div className="col-lg-2"></div>
         </div>
-        <h1> {selectedRoomId !== "" ? ( "Wybrano pokój nr " + selectedRoomId ) : "Nie wybrano"} </h1>
+        <h2> {selectedRoomId !== "" ? ( "Wybrano pokój nr " + selectedRoomId ) : "Nie wybrano"} </h2>
+        <Button color="info" onClick={e => { this.setState({selectedRoomId: ""}) }}>
+              Pokaż ze wszystkich pokoi 
+            </Button>
         <div className="row  p-4">
-          {/* <div className="col-lg-6"> 
-             <Table>
-          <thead><tr><th>Stopień</th> <th>Imię</th> <th>Nazwisko</th> <th>Pokój</th> <th>Akcje</th></tr></thead>
-          <tbody>{ selectedRoomData.roomSoldiers.map(this.renderSoldier) }</tbody>
-        </Table>
-             </div> */}
+
 
 
           <AddModal
@@ -385,7 +398,7 @@ class FloorManager extends Component {
         <NavbarBrand >Lista żołnierzy</NavbarBrand>
  <Nav className="mr-auto" navbar>
      </Nav>
-        <Button color="primary" onClick={this.toggleNewItemModal}>
+        <Button color="info" onClick={this.toggleNewItemModal}>
               <FontAwesomeIcon icon={faPlus} /> Dodaj nowego żołnierza
             </Button>
         
@@ -393,18 +406,15 @@ class FloorManager extends Component {
       
       </Navbar>
  
- 
+ {
+         
+        <Table striped>
+          <thead><tr><th>Stopień</th> <th>Imię</th> <th>Nazwisko</th> <th>Pokój</th> <th>Akcje</th></tr></thead>
+          <tbody>{ selectedRoomId==="" ? soldiers.map(this.renderSoldier) : selectedRoomData.roomSoldiers.map(this.renderSoldier) }</tbody>
+        </Table>
+  }      
 
 
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>#</th> <th>Pomieszczenie</th> <th>Nazwa</th>{" "}
-                  <th>Ikona</th> <th>Akcje</th>
-                </tr>
-              </thead>
-              <tbody>{selectedRoomData.roomItems.map(this.renderRow)}</tbody>
-            </Table>
           </div>
           <div className="col-lg-6">
   
@@ -414,7 +424,7 @@ class FloorManager extends Component {
         <NavbarBrand >Lista wyposażenia</NavbarBrand>
  <Nav className="mr-auto" navbar>
      </Nav>
-        <Button color="primary" onClick={this.toggleNewItemModal}>
+        <Button  color="info" onClick={this.toggleNewItemModal}>
               <FontAwesomeIcon icon={faPlus} /> Dodaj nowe wyposażenie
             </Button>
         
@@ -422,18 +432,19 @@ class FloorManager extends Component {
       
       </Navbar>
 
+
+        
+
       <Table striped>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Pomieszczenie</th>
-                  <th>Nazwa</th>
-                  <th>Ikona</th>
-                  <th>Akcje</th>
+                  <th>#</th> <th>Pomieszczenie</th> <th>Nazwa</th>{" "}
+                  <th>Ikona</th><th>Stan</th> <th>Akcje</th>
                 </tr>
               </thead>
-              <tbody> {items.map(this.renderRow)} </tbody>
+              <tbody>{ selectedRoomId==="" ? items.map(this.renderRow) : selectedRoomData.roomItems.map(this.renderRow) }</tbody>
             </Table>
+
           </div>
         </div>
       </div>

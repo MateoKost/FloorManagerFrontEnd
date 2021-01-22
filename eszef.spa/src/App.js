@@ -12,6 +12,7 @@ import LandingPage from './Components/LandingPage'
 import FloorManager from './Components/FloorManager'
 
 import  axios  from 'axios';
+import LoggedIn from './Components/LoggedIn';
 
 class App extends Component {
   constructor(props){
@@ -34,7 +35,7 @@ getItems = async() => {
     <div className="App conta">
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route path="/manage" component={FloorManager} />
+        <Route path="/manage" component={LoggedIn} />
       </Switch>
     </div>
   );

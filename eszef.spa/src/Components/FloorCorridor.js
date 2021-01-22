@@ -48,7 +48,7 @@ const styles = {
     //backgroundColor: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     fontSize: '10',
-    backgroundColor: focused | active ? '#515945' : "#B0BFB5",
+    backgroundColor: focused | active ? '#FEFFDB' : "#E6E6E6",
 
     gridArea: number,
     /*width: 40px;

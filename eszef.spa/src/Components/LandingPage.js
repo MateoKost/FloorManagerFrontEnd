@@ -6,6 +6,7 @@ import AutoSlider from './AutoSlider';
 import { Label, FormGroup, Input, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 import SignInModal from "./SignInModal";
+import RegisterModal from "./RegisterModal";
 
 import NavMenu from './NavMenu';
 
@@ -15,11 +16,12 @@ class LandingPage extends Component {
       super(props);
       this.state = {
         signInModal:false,
-
+        registerModal:false,
 
   //const { signInModal, setSignInModal } = useState(false);
       };
       this.toggleSignInModal = this.toggleSignInModal.bind(this);
+      this.toggleRegisterModal = this.toggleRegisterModal.bind(this);
     };
 
 
@@ -31,14 +33,20 @@ class LandingPage extends Component {
     })
   };
 
+  toggleRegisterModal(){
+    this.setState({
+      registerModal: !this.state.registerModal
+    })
+  };
+
   render() {
   return (
       <div>
         <NavMenu onClick={this.toggleSignInModal} />
         <AutoSlider />
-        <Button color="dark" className="m-4 p-4" onClick={ this.toggleSignInModal } > Zarejestruj się  </Button>
+        <Button color="dark" className="m-4 p-4" onClick={ this.toggleRegisterModal } > Zarejestruj się  </Button>
         <SignInModal signInModal={ this.state.signInModal } onCancel={this.toggleSignInModal}/>
-{/* {localStorage.getItem.} */}
+        <RegisterModal registerModal={ this.state.registerModal } onCancel={this.toggleRegisterModal}/>
     </div>
   );
 }
