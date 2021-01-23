@@ -31,6 +31,7 @@ import {
   faHammer,
   faCreditCard,
   faChair,
+  faTired,
 } from "@fortawesome/free-solid-svg-icons";
 import { Label, FormGroup, Input } from "reactstrap";
 import classnames from "classnames";
@@ -38,14 +39,32 @@ import classnames from "classnames";
 class UserProfile extends Component {
   constructor(props) {
     super(props);
+    const loginData2 = JSON.parse(localStorage.getItem( "login" )).loginData;
+
     let token = "Bearer " + JSON.parse(localStorage.getItem("login")).store;
     this.state = {
       toke: token,
       activeTab: "1",
       editUserData: {
-        email: "123",
-        password: "123",
+        email: "",
+        userName: "",
+        lastName: "",
+        company: "",
+        cost: ""
  
+      },
+      loggedInData:{
+        email: "",
+        userName: "",
+        lastName: "",
+        company: "",
+        cost: ""
+ 
+      },
+
+      loginData:{
+        email: loginData2.email,
+        password: loginData2.password,
       },
       dataChanged:false,
     };
@@ -66,34 +85,87 @@ class UserProfile extends Component {
 
   
 
-  editUser  = async (editUserData) => {
+  editUser  = async () => {
+
+    const { editUserData } =this.state;
 
     let params2 = {
       email: editUserData.email,
-      password: editUserData.password,
+      userName: editUserData.userName,
+      lastName: editUserData.lastName,
+      company: parseInt(editUserData.company),
+      cost: parseFloat(editUserData.cost)
     };
 
+    console.log(params2);
+
     axios
-      .put("https://localhost:5001/login/user", params2, {
+      .put("https://localhost:5001/login/user/", params2, {
         headers: {
-          Authorization: this.state.token,
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
         },
       })
       .then((_) => {
-        localStorage.clear(); 
-        this.setState({
-          dataChanged: true
-        })
-        //history.push("/");
+
+          console.log(_);
+
+      //  localStorage.clear(); 
+        // this.setState({
+        //   dataChanged: true
+        // })
       });
   };
 
 
+  getUserParams = async () => {
 
-  componentDidMount() {}
+    let email = JSON.parse( localStorage.getItem( "login" )).loginData.email;
+
+    //console.log( email )
+
+
+    await axios
+      .get(`https://localhost:5001/login/user/${email }`, {
+        headers: {
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+        },
+      })
+      .then((response) => {
+        //console.log( response.data.find( (item) => item.isRepaired === false ));
+        //const itemsToRepair2 = response.data.find( (item) => item.isRepaired === false );
+
+     // console.log( response.data.lastName )
+
+       
+        this.setState({
+          loggedInData: {
+            email: response.data.email,
+            userName: response.data.userName,
+            lastName: response.data.lastName,
+            company: response.data.company,
+            cost: response.data.cost
+          },
+          editUserData: {
+            email: response.data.email,
+            userName: response.data.userName,
+            lastName: response.data.lastName,
+            company: response.data.company,
+            cost: response.data.cost
+          }
+            
+        });
+
+
+        console.log( this.state.loggedInData )
+      });
+  };
+
+  componentDidMount() {
+    this.getUserParams();
+  }
 
   render() {
-    const { editUserData, dataChanged } = this.setState;
+    const { editUserData, dataChanged, loginData, loggedInData } = this.state;
 
     return (
  
@@ -173,6 +245,12 @@ class UserProfile extends Component {
                       name="itemName"
                       id="itemName"
                       placeholder="E-mail"
+                      disabled
+                      value={ JSON.parse(localStorage.getItem( "login" )).loginData.email } 
+                      onChange={(e) => {
+                        editUserData.email = e.target.value;
+                        this.setState({ editUserData });
+                      }}
                     />
                   </FormGroup>
 
@@ -180,13 +258,89 @@ class UserProfile extends Component {
                     <Label for="itemName">Hasło</Label>
                     <Input
                       required
+                      disabled
                       type="password"
                       name="itemName"
                       id="itemName"
                       placeholder="Hasło"
-
+                      value={ JSON.parse(localStorage.getItem( "login" )).loginData.password } 
                     />
                   </FormGroup>
+
+
+                  <FormGroup>
+                    <Label for="itemName">Imię</Label>
+                    <Input
+                      required
+                      type="text"
+                      name="itemName"
+                      id="itemName"
+                      placeholder={ editUserData.userName }
+                      value={ editUserData.userName }
+                      onChange={(e) => {
+                        editUserData.userName = e.target.value;
+                        this.setState({ editUserData });
+                      }}
+                    />
+                  </FormGroup>
+
+
+
+                  <FormGroup>
+                    <Label for="itemName">Nazwisko</Label>
+                    <Input
+                      required
+                      type="text"
+                      name="itemName"
+                      id="itemName"
+                      placeholder={ editUserData.lastName } 
+       
+                      value={ editUserData.lastName } 
+                      onChange={(e) => {
+                        editUserData.lastName = e.target.value;
+                        this.setState({ editUserData });
+                      }}
+                    />
+                  </FormGroup>
+
+
+
+
+                  <FormGroup>
+                    <Label for="itemName">Kompania</Label>
+                    <Input
+                      required
+                      type="number"
+                      name="kompania"
+                      id="kompania"
+                      placeholder={ editUserData.company  } 
+                      value={ editUserData.company } 
+                      onChange={(e) => {
+                        editUserData.company = e.target.value;
+                        this.setState({ editUserData });
+                      }}
+                    />
+                  </FormGroup>
+
+
+                  <FormGroup>
+                    <Label for="itemName">Koszt</Label>
+                    <Input
+                      required
+                      type="number"
+                      name="itemName"
+                      id="itemName"
+                      placeholder={ loggedInData.cost } 
+                      disabled
+                      value={ loggedInData.cost } 
+                      // onChange={(e) => {
+                      //   editUserData.cost = e.target.value;
+                      //   this.setState({ editUserData });
+                      // }}
+                    />
+                  </FormGroup>
+
+
 
                   {/* <CardText>  </CardText> */}
                   <Button
@@ -197,6 +351,8 @@ class UserProfile extends Component {
                     {/* <FontAwesomeIcon icon={faPlus} />*/}
                     Zatwierdź
                   </Button>
+
+                  {/* {loggedInData.lastName} */}
                 </CardBody>
               </Card>
             </TabPane>

@@ -71,8 +71,14 @@ class SignInModal extends Component {
       
       localStorage.setItem('login',JSON.stringify({
         login:true,
-        store:result.data.token
+        store:result.data.token,
+        loginData:this.state.loginData
+        // email: this.state.loginData.email,
+        // password: this.state.loginData.password
       }))
+
+
+
 
       this.storeCollector()
 
