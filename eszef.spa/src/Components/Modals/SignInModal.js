@@ -2,7 +2,7 @@ import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-butto
 import { Label, FormGroup, Input, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { React, Component } from 'react';
 import { Redirect, useHistory } from "react-router-dom";
-import '../App.css';
+import '../../App.css';
 
 import axios from 'axios';
 

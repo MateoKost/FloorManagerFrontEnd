@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "../App.css";
+import '../App.css';
 import { Alert, Table, Button, Navbar } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,9 +18,9 @@ import {
 } from "react-router-dom";
 
 
-import Workshop from "./Workshop";
+import Workshop from "./FloorObjects/Workshop";
 import NMLoggedIn from "./NMLoggedIn";
-import FloorManager from "./FloorManager";
+import FloorManager from "./FloorObjects/FloorManager";
 
 
 

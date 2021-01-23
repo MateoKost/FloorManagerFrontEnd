@@ -8,8 +8,8 @@ import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Component } from 'react';
 
-import LandingPage from './Components/LandingPage'
-import FloorManager from './Components/FloorManager'
+import LandingPage from './Components/LandingPage/LandingPage'
+//import FloorManager from './Components/FloorManager'
 
 import  axios  from 'axios';
 import LoggedIn from './Components/LoggedIn';

@@ -1,12 +1,12 @@
-import '../App.css';
+import '../../App.css';
 import React, { Component } from 'react';
 
 import AutoSlider from './AutoSlider';
 
 import { Label, FormGroup, Input, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
-import SignInModal from "./SignInModal";
-import RegisterModal from "./RegisterModal";
+import SignInModal from "../Modals/SignInModal";
+import RegisterModal from "../Modals/RegisterModal";
 
 import NavMenu from './NavMenu';
 

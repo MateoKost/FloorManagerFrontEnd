@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "../App.css";
+import "../../App.css";
 import { Alert, Table, Button, Navbar } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +8,7 @@ import {
   faTrash,
   faPen,
   faChair,
-  faHammer
+  faHammer,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -19,18 +19,27 @@ import {
 } from "react-router-dom";
 
 import itemIconNames from "./IconNames";
-import AddModal from "./AddModal";
-import EditModal from "./EditModal";
+
+import AddModal from "../Modals/AddModal";
+import AddSoldierModal from "../Modals/AddSoldierModal";
+import EditModal from "../Modals/EditModal";
+import EditSoldierModal from "../Modals/EditSoldierModal";
+
 import FloorGrid from "./FloorGrid";
-import Workshop from "./Workshop";
-import NMLoggedIn from "./NMLoggedIn";
 
-
-import { 
-  Collapse, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, 
-  UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText
-} from 'reactstrap';
-
+import {
+  Collapse,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText,
+} from "reactstrap";
 
 class FloorManager extends Component {
   constructor(props) {
@@ -38,8 +47,10 @@ class FloorManager extends Component {
     let token = "Bearer " + JSON.parse(localStorage.getItem("login")).store;
     this.state = {
       token: token,
+      
       items: [],
       soldiers: [],
+
       selectedRoomData: {
         roomItems: [],
         roomSoldiers: [],
@@ -54,7 +65,17 @@ class FloorManager extends Component {
         itemName: "",
       },
 
+      editSoldierData: {
+        idSoldier: "",
+        name: "",
+        lastName: "",
+        rank: "",
+        idRoom: "",
+      },
+
       editItemModal: false,
+      editSoldierModal: false,
+      newSoldierModal: false,
       newItemModal: false,
 
       addedData: {
@@ -74,7 +95,9 @@ class FloorManager extends Component {
     };
 
     this.toggleEditItemModal = this.toggleEditItemModal.bind(this);
+    this.toggleEditSoldierModal = this.toggleEditSoldierModal.bind(this);
     this.toggleNewItemModal = this.toggleNewItemModal.bind(this);
+    this.toggleNewSoldierModal = this.toggleNewSoldierModal.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +105,7 @@ class FloorManager extends Component {
     this.getSoldiers();
   }
 
-
+  
   getSoldiers = async () => {
     await axios
       .get("https://localhost:5001/soldier", {
@@ -96,8 +119,6 @@ class FloorManager extends Component {
         });
       });
   };
-
-
 
   getItems = async () => {
     await axios
@@ -131,6 +152,7 @@ class FloorManager extends Component {
         });
       });
   };
+
 
   addItem = async (newItemData) => {
     const { items } = this.state;
@@ -166,15 +188,48 @@ class FloorManager extends Component {
       });
   };
 
-  editItem = async () => {
-    const { editItemData, items } = this.state;
-    await fetch(
-      `http://localhost:1234/items/edit?id=${editItemData.id}&idRoom=${editItemData.idRoom}&itemName=${editItemData.itemName}`,
-      {}
-    ).then((response) => {
-      console.log(response.data);
-      this.getItems();
-      this.setState({
+  addSoldier = async ( newSoldierData ) => {
+    const { soldiers } = this.state;
+    let params2 = {
+      idSoldier: newSoldierData.idSoldier,
+      name: newSoldierData.name,
+      lastName: newSoldierData.lastName,
+      rank: newSoldierData.rank,
+      idRoom: parseInt(newSoldierData.idRoom),
+    };
+
+    axios
+      .post("https://localhost:5001/soldier", params2, {
+        headers: {
+          Authorization: this.state.token,
+        },
+      })
+      .then((_) => {
+        this.getSoldiers();
+        this.setState({
+          newSoldiersModal: false,
+          soldiers,
+          newSoldierData: {
+            name: newSoldierData.name,
+            lastName: newSoldierData.lastName,
+            rank: newSoldierData.rank,
+            idRoom: parseInt(newSoldierData.idRoom),
+          },
+          // addedSoldierData: {
+          //   id: "",
+          //   idRoom: newSoldierData.idRoom,
+          //   itemName: newSoldierData.itemName,
+          // },
+          // alertSoldierVisibility: true,
+          // addedSoldier: true,
+        });
+      });
+  };
+
+
+  editItem = async (editItemData) => {
+    const {  items } = this.state;
+    await this.setState({
         editItemModal: false,
         items,
         editItemData: {
@@ -183,9 +238,37 @@ class FloorManager extends Component {
           itemName: "",
         },
       });
+  };
+
+  editSoldier(editSoldierData) {
+  //  const { editSoldierData, soldiers } = this.state;
+    this.setState({
+      editSoldierModal: false,
+      editSoldierData: {
+        idSoldier: "",
+        name: "",
+        lastName: "",
+        rank: "",
+        idRoom: "",
+      },
     });
   };
 
+
+  toggleEditItemModal() {
+    this.setState({
+      editItemModal: !this.state.editItemModal,
+    });
+  }
+
+  toggleEditSoldierModal() {
+    this.setState({
+      editSoldierModal: !this.state.editSoldierModal
+    });
+  }
+
+
+  
   toggleSuccessAlerts() {
     this.setState({
       alertVisibility: false,
@@ -198,11 +281,29 @@ class FloorManager extends Component {
     });
   }
 
-  toggleEditItemModal() {
+
+
+  setEditSoldierData(idSoldier, name, lastName, rank, idRoom) {
+    this.toggleEditSoldierModal();
+
     this.setState({
-      editItemModal: !this.state.editItemModal,
+      editSoldierData: {
+        idSoldier: idSoldier,
+        name: name,
+        lastName: lastName,
+        rank: rank,
+        idRoom: idRoom,
+      },
     });
   }
+
+
+  toggleNewSoldierModal() {
+    this.setState({
+      newSoldierModal: !this.state.newSoldierModal,
+    });
+  }
+
 
   toggleNewItemModal() {
     this.setState({
@@ -241,11 +342,11 @@ class FloorManager extends Component {
       });
   };
 
-  onDismiss = () => this.setState({ alertVisibility: false });
+  onDismiss  = () => this.setState({ alertVisibility: false });
   onDismissDeleted = () => this.setState({ alertVisibilityDeleted: false });
 
   renderRow = ({ id, idRoom, itemName, isRepaired }) => (
-    <tr key={id} style={  { backgroundColor: !isRepaired && '#FFF3DB'} }  >
+    <tr key={id} style={{ backgroundColor: !isRepaired && "#FFF3DB" }}>
       <td>{id}</td>
       <td>{idRoom}</td>
       <td>{itemName}</td>
@@ -258,14 +359,15 @@ class FloorManager extends Component {
       </td>
       <td>{isRepaired ? "1" : "0"}</td>
       <td>
-      <Button disabled={isRepaired}
+        {/* <Button
+          disabled={isRepaired}
           color="warning"
           size="sm"
           className="mr-2"
           onClick={this.setEditItemData.bind(this, id, idRoom, itemName)}
         >
           <FontAwesomeIcon icon={faHammer} />
-        </Button>
+        </Button> */}
 
         <Button
           color="success"
@@ -298,7 +400,7 @@ class FloorManager extends Component {
           color="success"
           size="sm"
           className="mr-2"
-          onClick={this.setEditItemData.bind(
+          onClick={this.setEditSoldierData.bind(
             this,
             idSoldier,
             name,
@@ -312,7 +414,7 @@ class FloorManager extends Component {
         <Button
           color="danger"
           size="sm"
-          onClick={this.deleteItem.bind(this, { idSoldier })}
+         // onClick={this.deleteItem.bind(this, { idSoldier })}
         >
           <FontAwesomeIcon icon={faTrash} />
         </Button>
@@ -329,7 +431,8 @@ class FloorManager extends Component {
 
   render() {
     const {
-      items, soldiers,
+      items,
+      soldiers,
       addedData,
       addedItem,
       alertVisibility,
@@ -340,13 +443,11 @@ class FloorManager extends Component {
     } = this.state;
 
     return (
-      <div >
-
-
-        <div className="row" >
-        <div className="col-lg-2"></div>
+      <div>
+        <div className="row">
+          <div className="col-lg-2"></div>
           <div className="col-lg-8">
-          <h1>11 kompania</h1>
+            <h1>11 kompania</h1>
             <FloorGrid selectRoom={this.selectRoom} />
             {alertVisibility && (
               <Alert
@@ -372,79 +473,100 @@ class FloorManager extends Component {
           </div>
           <div className="col-lg-2"></div>
         </div>
-        <h2> {selectedRoomId !== "" ? ( "Wybrano pokój nr " + selectedRoomId ) : "Nie wybrano"} </h2>
-        <Button color="info" onClick={e => { this.setState({selectedRoomId: ""}) }}>
-              Pokaż ze wszystkich pokoi 
-            </Button>
+        <h2>
+          {selectedRoomId !== ""
+            ? "Wybrano pokój nr " + selectedRoomId
+            : "Nie wybrano"}{" "}
+        </h2>
+        <Button
+          color="info"
+          onClick={(e) => {
+            this.setState({ selectedRoomId: "" });
+          }}
+        >
+          Pokaż ze wszystkich pokoi
+        </Button>
         <div className="row  p-4">
-
-
-
           <AddModal
             onEnter={this.addItem}
             onCancel={this.toggleNewItemModal}
             newItemModal={this.state.newItemModal}
           />
           <EditModal
-            onENter={this.editItem}
+            onEnter={this.editItem}
             editItemData={this.state.editItemData}
             editItemModal={this.state.editItemModal}
             onCancel={this.toggleEditItemModal}
           />
-         
+
+          <AddSoldierModal
+            onEnter={this.addSoldier}
+           // newSoldierData={this.state.newSoldierData}
+            newSoldierModal={this.state.newSoldierModal}
+            onCancel={this.toggleNewSoldierModal}
+          />
+
+          <EditSoldierModal
+            onEnter={this.editSoldier}
+            editSoldierData={this.state.editSoldierData}
+            editSoldierModal={this.state.editSoldierModal}
+            onCancel={this.toggleEditSoldierModal}
+          />
+
           <div className="col-lg-6 ">
+            <Navbar className="navbar-dark bg-dark" expand="md">
+              <NavbarBrand>Lista żołnierzy</NavbarBrand>
+              <Nav className="mr-auto" navbar></Nav>
+              <Button color="info" onClick={this.toggleNewSoldierModal}>
+                <FontAwesomeIcon icon={faPlus} /> Dodaj 
+              </Button>
 
-          <Navbar className="navbar-dark bg-dark"  expand="md">
-        <NavbarBrand >Lista żołnierzy</NavbarBrand>
- <Nav className="mr-auto" navbar>
-     </Nav>
-        <Button color="info" onClick={this.toggleNewItemModal}>
-              <FontAwesomeIcon icon={faPlus} /> Dodaj nowego żołnierza
-            </Button>
-        
-          {/* <NavbarText>Zaloguj</NavbarText> */}
-      
-      </Navbar>
- 
- {
-         
-        <Table striped>
-          <thead><tr><th>Stopień</th> <th>Imię</th> <th>Nazwisko</th> <th>Pokój</th> <th>Akcje</th></tr></thead>
-          <tbody>{ selectedRoomId==="" ? soldiers.map(this.renderSoldier) : selectedRoomData.roomSoldiers.map(this.renderSoldier) }</tbody>
-        </Table>
-  }      
+              {/* <NavbarText>Zaloguj</NavbarText> */}
+            </Navbar>
 
-
+            {
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>Stopień</th> <th>Imię</th> <th>Nazwisko</th>{" "}
+                    <th>Pokój</th> <th>Akcje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedRoomId === ""
+                    ? soldiers.map(this.renderSoldier)
+                    : selectedRoomData.roomSoldiers.map(this.renderSoldier)}
+                </tbody>
+              </Table>
+            }
           </div>
           <div className="col-lg-6">
-  
             {/* <Button color="primary" onClick={this.toggleNewItemModal.bind(this)}><FontAwesomeIcon icon={faPlus} /> Dodaj nowe wyposażenie</Button> */}
 
-            <Navbar className="navbar-dark bg-dark"  expand="md">
-        <NavbarBrand >Lista wyposażenia</NavbarBrand>
- <Nav className="mr-auto" navbar>
-     </Nav>
-        <Button  color="info" onClick={this.toggleNewItemModal}>
-              <FontAwesomeIcon icon={faPlus} /> Dodaj nowe wyposażenie
-            </Button>
-        
-          {/* <NavbarText>Zaloguj</NavbarText> */}
-      
-      </Navbar>
+            <Navbar className="navbar-dark bg-dark" expand="md">
+              <NavbarBrand>Lista wyposażenia</NavbarBrand>
+              <Nav className="mr-auto" navbar></Nav>
+              <Button color="info" onClick={this.toggleNewItemModal}>
+                <FontAwesomeIcon icon={faPlus} /> Dodaj
+              </Button>
 
+              {/* <NavbarText>Zaloguj</NavbarText> */}
+            </Navbar>
 
-        
-
-      <Table striped>
+            <Table striped>
               <thead>
                 <tr>
                   <th>#</th> <th>Pomieszczenie</th> <th>Nazwa</th>{" "}
-                  <th>Ikona</th><th>Stan</th> <th>Akcje</th>
+                  <th>Ikona</th>
+                  <th>Stan</th> <th>Akcje</th>
                 </tr>
               </thead>
-              <tbody>{ selectedRoomId==="" ? items.map(this.renderRow) : selectedRoomData.roomItems.map(this.renderRow) }</tbody>
+              <tbody>
+                {selectedRoomId === ""
+                  ? items.map(this.renderRow)
+                  : selectedRoomData.roomItems.map(this.renderRow)}
+              </tbody>
             </Table>
-
           </div>
         </div>
       </div>

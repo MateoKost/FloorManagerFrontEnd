@@ -7,7 +7,7 @@ import {
   CarouselCaption
 } from 'reactstrap';
 
-import '../LP.css';
+import '../../LP.css';
 
 
 

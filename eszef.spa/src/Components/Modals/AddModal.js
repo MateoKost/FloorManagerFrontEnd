@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import itemIconNames from './IconNames';
+import itemIconNames from '../../Components/FloorObjects/IconNames';
 
 class AddModal extends Component {
   constructor(props) {

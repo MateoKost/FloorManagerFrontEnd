@@ -4,8 +4,15 @@ import {
 } from 'reactstrap';
 
 import { useHistory } from "react-router-dom";
-import '../App.css';
-import eszef from "../Assets/Eszef.png";
+import '../../App.css';
+import eszef from "../../Assets/Eszef.png";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faSignInAlt
+} from "@fortawesome/free-solid-svg-icons";
+
+
 
 const NavMenu = (props) => {
 
@@ -48,7 +55,15 @@ const NavMenu = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <Button color="secondary" onClick={props.onClick} >Zaloguj się</Button>
+
+
+     
+
+
+          <Button color="dark" style={{minWidth:"100px"}} onClick={props.onClick} >
+            <div><FontAwesomeIcon icon={faSignInAlt} className="fa-lg"/></div>
+            <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Zaloguj</span></div>
+            </Button>
           {/* <NavbarText>Zaloguj</NavbarText> */}
         </Collapse>
       </Navbar>
