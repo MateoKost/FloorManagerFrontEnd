@@ -11,7 +11,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-
+import ranks from '../FloorObjects/ranks';
 
 class EditSoldierModal extends Component {
   constructor(props) {
@@ -57,23 +57,41 @@ class EditSoldierModal extends Component {
           <ModalBody>
             <FormGroup>
             
+
             <FormGroup>
-              <Label for="itemName">Stopień</Label>
-              <Input type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editSoldierData.rank} />
-            </FormGroup>
+            <Label for="idRoom">Stopień</Label>
+            <Input
+              type="select"
+              name="rank"
+              id="rank"
+              required
+              placeholder="Stopień"
+              value={editSoldierData.rank}
+              onChange={(e) => {
+                editSoldierData.rank = e.target.value;
+                this.setState({ editSoldierData });
+              }}
+              >
+              {ranks.map((rank, i) => (
+                <option key={i}>{rank}</option>
+              ))}
+            </Input>
+          </FormGroup>
+
+
 
             <FormGroup>
               <Label for="itemName">Imię</Label>
-              <Input type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editSoldierData.name} disabled={true}/>
+              <Input    required type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editSoldierData.name} disabled={true}/>
             </FormGroup>
 
             <FormGroup>
               <Label for="itemName">Nazwisko</Label>
-              <Input type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editSoldierData.lastName} disabled={true}/>
+              <Input    required type="text" name="itemName" id="itemName" placeholder="Nazwa" value={editSoldierData.lastName} disabled={true}/>
             </FormGroup>
 
               <Label for="idRoom">Pomieszczenie</Label>
-              <Input type="number" name="idRoom" id="idRoom" placeholder="Pomieszczenie"value={editSoldierData.idRoom} onChange={(e) => {
+              <Input    required type="number" name="idRoom" id="idRoom" placeholder="Pomieszczenie"value={editSoldierData.idRoom} onChange={(e) => {
                 editSoldierData.idRoom = e.target.value;
                 this.setState({ editSoldierData });
               }}/>

@@ -21,7 +21,7 @@ import {
 import Workshop from "./FloorObjects/Workshop";
 import NMLoggedIn from "./NMLoggedIn";
 import FloorManager from "./FloorObjects/FloorManager";
-
+import UserProfile from "./FloorObjects/UserProfile";
 
 
 class LoggedIn extends Component {
@@ -43,6 +43,7 @@ class LoggedIn extends Component {
         <Switch>
           <Route path="/manage/workshop" component={Workshop} />
           <Route path="/manage/floor" component={FloorManager} />
+          <Route path="/manage/profile" component={UserProfile} />
         </Switch>
       </div>
     );

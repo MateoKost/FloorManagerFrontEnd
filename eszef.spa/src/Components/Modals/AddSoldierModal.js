@@ -11,10 +11,8 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import ranks from '../FloorObjects/ranks';
 
-import itemIconNames from '../FloorObjects/IconNames';
 
 class AddSoldierModal extends Component {
   constructor(props) {
@@ -70,16 +68,21 @@ class AddSoldierModal extends Component {
             <FormGroup>
             <Label for="idRoom">Stopień</Label>
             <Input
-              type="text"
+              type="select"
               name="rank"
               id="rank"
+              required
               placeholder="Stopień"
               value={newSoldierData.rank}
               onChange={(e) => {
                 newSoldierData.rank = e.target.value;
                 this.setState({ newSoldierData });
               }}
-            />
+              >
+              {ranks.map((rank, i) => (
+                <option key={i}>{rank}</option>
+              ))}
+            </Input>
           </FormGroup>
 
 
@@ -90,6 +93,7 @@ class AddSoldierModal extends Component {
               type="text"
               name="name"
               id="name"
+              required
               placeholder="Imię"
               value={newSoldierData.name}
               onChange={(e) => {
@@ -107,6 +111,7 @@ class AddSoldierModal extends Component {
               type="text"
               name="lastName"
               id="lastName"
+              required
               placeholder="Nazwisko"
               value={newSoldierData.lastName}
               onChange={(e) => {
@@ -124,6 +129,7 @@ class AddSoldierModal extends Component {
               type="number"
               name="idRoom"
               id="idRoom"
+              required
               placeholder="Pomieszczenie"
               value={newSoldierData.idRoom}
               onChange={(e) => {

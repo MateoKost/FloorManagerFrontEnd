@@ -15,7 +15,8 @@ import {
   faChair,
   faHammer,
   faSignOutAlt,
-  faTasks
+  faTasks,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 
 const NavMenu = () => {
@@ -53,8 +54,13 @@ const NavMenu = () => {
           <div><FontAwesomeIcon icon={faHammer} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Warsztat</span></div>
              </Button>
+       
+          <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ history.push("/manage/profile"); }  }>
+          <div><FontAwesomeIcon icon={faUser} className="fa-lg"/></div>
+          <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Profil</span></div>
+          </Button>
+
           <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ localStorage.clear(); history.push("/"); }  }>       
-          
           <div><FontAwesomeIcon icon={faSignOutAlt} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Wyloguj się</span></div>
           </Button>
