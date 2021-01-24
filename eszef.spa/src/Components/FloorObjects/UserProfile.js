@@ -87,7 +87,7 @@ class UserProfile extends Component {
 
   editUser  = async () => {
 
-    const { editUserData } =this.state;
+    const { editUserData } = this.state;
 
     let params2 = {
       email: editUserData.email,

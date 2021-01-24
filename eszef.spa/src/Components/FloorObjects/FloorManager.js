@@ -240,8 +240,23 @@ class FloorManager extends Component {
       });
   };
 
-  editSoldier(editSoldierData) {
+  editSoldier = async(editSoldierData) => {
   //  const { editSoldierData, soldiers } = this.state;
+
+  let params2 = {
+   // idSoldier: editSoldierData.idSoldier,
+   // name: editSoldierData.name,
+    lastName: editSoldierData.lastName,
+    rank: editSoldierData.rank,
+    idRoom: parseInt( editSoldierData.idRoom) ,
+  };
+
+  await axios.put("https://localhost:5001/soldier", params2, {
+    headers: {
+      Authorization: this.state.token,
+    },
+  })
+  .then((_) => {
     this.setState({
       editSoldierModal: false,
       editSoldierData: {
@@ -252,6 +267,8 @@ class FloorManager extends Component {
         idRoom: "",
       },
     });
+    this.getSoldiers();
+  });
   };
 
 
