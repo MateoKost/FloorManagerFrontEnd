@@ -26,6 +26,8 @@ import {
 
 import itemIconNames from "./IconNames";
 
+
+
 const stripePromise = loadStripe(
   "pk_test_51I9t89BhNjZNZazmTpkgwWIlp5b7jQpVBPJBQkq2Zy5nFEyMWbZG2Ix1IYmzvr9IgwScL4XDcmZmh8iDEK2OttsP00cCRPeNZZ"
 );
@@ -311,6 +313,9 @@ class Workshop extends Component {
         {/* { this.state.back && <Redirect to="/manage/workshop" />} */}
 
   {/* {this.state.payed && this.dudu } */}
+
+
+    
 
         {this.state.message && (
           <Alert

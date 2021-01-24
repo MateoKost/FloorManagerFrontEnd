@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 //import { BrowserRouter } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
+<script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
 
 ReactDOM.render(
   <React.StrictMode>

@@ -22,6 +22,7 @@ import Workshop from "./FloorObjects/Workshop";
 import NMLoggedIn from "./NMLoggedIn";
 import FloorManager from "./FloorObjects/FloorManager";
 import UserProfile from "./FloorObjects/UserProfile";
+import Calendar from './Calendar';
 
 
 class LoggedIn extends Component {
@@ -44,6 +45,7 @@ class LoggedIn extends Component {
           <Route path="/manage/workshop" component={Workshop} />
           <Route path="/manage/floor" component={FloorManager} />
           <Route path="/manage/profile" component={UserProfile} />
+          <Route path="/manage/calendar" component={Calendar} />
         </Switch>
       </div>
     );
