@@ -161,9 +161,9 @@ class RegisterModal extends Component {
             >
               Zarejestruj się
             </Button>
-            <span className="text-center pt-3"> Zarejestruj się przez </span>
+            {/* <span className="text-center pt-3"> Zarejestruj się przez </span>
             <GoogleLoginButton />
-            <FacebookLoginButton />
+            <FacebookLoginButton /> */}
             <div className="text-center">
               <a href="/sign-up">Zarejestruj się</a>
               <span className="p=2"> | </span>

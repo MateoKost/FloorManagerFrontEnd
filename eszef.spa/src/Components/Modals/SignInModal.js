@@ -159,9 +159,9 @@ class SignInModal extends Component {
             >
               Zaloguj się
             </Button>
-            <span className="text-center pt-3"> Zaloguj się przez </span>
-            <GoogleLoginButton />
-            <FacebookLoginButton />
+            {/* <span className="text-center pt-3"> Zaloguj się przez </span> */}
+            {/* <GoogleLoginButton />
+            <FacebookLoginButton /> */}
             <div className="text-center">
               <a href="/sign-up">Zarejestruj się</a>
               <span className="p=2"> | </span>
