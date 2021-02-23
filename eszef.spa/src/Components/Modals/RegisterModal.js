@@ -63,7 +63,8 @@ class RegisterModal extends Component {
       
       localStorage.setItem('login',JSON.stringify({
         login:true,
-        store:result.data.token
+        store:result.data.token,
+        loginData:this.state.loginData
       }))
 
       this.storeCollector()

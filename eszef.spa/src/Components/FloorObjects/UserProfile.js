@@ -275,7 +275,7 @@ class UserProfile extends Component {
                       type="text"
                       name="itemName"
                       id="itemName"
-                      placeholder={ editUserData.userName }
+                      placeholder={ editUserData.userName   }
                       value={ editUserData.userName }
                       onChange={(e) => {
                         editUserData.userName = e.target.value;

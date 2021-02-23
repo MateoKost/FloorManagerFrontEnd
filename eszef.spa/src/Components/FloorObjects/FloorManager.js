@@ -228,8 +228,14 @@ class FloorManager extends Component {
 
 
   editItem = async (editItemData) => {
-    const {  items } = this.state;
-    await this.setState({
+    const { items } = this.state;
+    await axios.put(`https://localhost:5001/${editItemData.idRoom}/${editItemData.id}`, "", {
+      headers: {
+        Authorization: this.state.token,
+      }
+
+    }).then(e=>{
+      this.setState({
         editItemModal: false,
         items,
         editItemData: {
@@ -238,6 +244,8 @@ class FloorManager extends Component {
           itemName: "",
         },
       });
+      this.getItems();
+    })
   };
 
   editSoldier = async(editSoldierData) => {
@@ -359,6 +367,26 @@ class FloorManager extends Component {
       });
   };
 
+
+  deleteSoldier = async ( {idSoldier}) => {
+    console.log( idSoldier )
+   // const { items } = this.state;
+    await axios.delete(`https://localhost:5001/soldier/${idSoldier}`,{
+        headers: {
+          Authorization: this.state.token,
+        },
+      })
+      .then((_) => {
+        this.setState({
+      //    addedData: dataById,
+        //  deletedItem: true,
+          alertVisibilityDeleted: true,
+        });
+        this.getSoldiers();
+      });
+  };
+
+
   onDismiss  = () => this.setState({ alertVisibility: false });
   onDismissDeleted = () => this.setState({ alertVisibilityDeleted: false });
 
@@ -431,7 +459,7 @@ class FloorManager extends Component {
         <Button
           color="danger"
           size="sm"
-         // onClick={this.deleteItem.bind(this, { idSoldier })}
+         onClick={this.deleteSoldier.bind(this, { idSoldier })}
         >
           <FontAwesomeIcon icon={faTrash} />
         </Button>
@@ -573,7 +601,7 @@ class FloorManager extends Component {
             <Table striped>
               <thead>
                 <tr>
-                  <th>#</th> <th>Pomieszczenie</th> <th>Nazwa</th>{" "}
+                  <th>#</th> <th>Pokój</th> <th>Nazwa</th>{" "}
                   <th>Ikona</th>
                   <th>Stan</th> <th>Akcje</th>
                 </tr>
