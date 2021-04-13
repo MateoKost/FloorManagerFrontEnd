@@ -2,21 +2,24 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStream } from '@fortawesome/free-solid-svg-icons'
-
+import {
+  Button,
+} from "reactstrap";
 
 const FloorStaircase = props => (
 
-    <button
+    <Button color="light"
       className="staircase"
+      disabled={false}
       //style={{backgroundColor: colors[props.status]}}
     //   onClick={() => props.onClick(props.number, props.status)}
     
         style={{ 'gridArea': 's'+ props.number }}
     >
-      <FontAwesomeIcon icon={faStream} />
+      <FontAwesomeIcon icon={faStream} />{" "}
       {props.number}
 
-    </button>
+    </Button>
 );
 
 // // Color Theme

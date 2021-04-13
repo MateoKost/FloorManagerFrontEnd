@@ -43,6 +43,7 @@
 
 .floorGrid {
   display: grid;
+  border: 1px solid #383e43;
   grid-template-areas:
     'r0 r4 s0 r8 r10 r14 s1 r18 r22'
     'r2 r6 s0 r8 r12 r16 s1 r20 r22'
@@ -51,32 +52,34 @@
     'r3 r7 c1 r9 r13 r17 c2 r21 r23'
     ;
     /* background-color: #2196F3; */
-    padding: 10px;
+    padding: 0px;
 }
 
 
 
 .floorGrid > .room {
-    background-color: rgba(145, 76, 76, 0.8);
+    /* background-color: rgba(145, 76, 76, 0.8); */
     text-align: center;
     font-size: 10;
     /*width: 40px;
     height: 40px;
     float: left;*/
+    border-width: 1px;
 }
 
 .floorGrid > .room {
-  background-color: rgba(205, 205, 255, 0.8);
+  /* background-color: rgba(205, 205, 255, 0.8); */
   text-align: center;
   font-size: 10;
   /*width: 40px;
   height: 40px;
   float: left;*/
+  border-width: 1px;
 }
 
 
 .floorGrid > .staircase{
-  background-color:"#B3B3B3";
+  /* background-color:"#B3B3B3"; */
   text-align: center;
   font-size: 10;
   /*width: 40px;
@@ -121,4 +124,36 @@
   widows: 40px;
   height: 40px;
   margin-right: 10px;
+}
+
+
+.dhda{
+  /* width: 40px; */
+  height: 30px;
+  object-fit: scale-down;
+}
+
+.LPSliderCaption h3{
+  font-size: 4rem;
+}
+
+
+.LPSliderCaption p{
+  font-size: 2rem;
+}
+
+.ke{
+
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
+}
+
+.brown {
+  background-color: #663333 !important;
+  color: white !important;
+}
+
+.brown:hover {
+  background-color: #541D1D !important;
+  color: white !important;
 }

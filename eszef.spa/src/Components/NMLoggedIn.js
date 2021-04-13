@@ -29,13 +29,13 @@ import {
 const NavMenu = () => {
 
   const history = useHistory();
+  const banner = process.env.PUBLIC_URL + '/Assets/banner_epic.svg';
 
   return (
 
 <div>
       <Navbar className="navbar-dark bg-dark"  expand="md">
-       <img  className="logo" src={eszef}  alt={"Eszef"} />
-        <NavbarBrand href="/">E-Szef</NavbarBrand>
+      <NavbarBrand href="/"><img  className="dhda" src={banner} alt={"Eszef"} /> </NavbarBrand> 
         <NavbarToggler 
         // onClick={toggle} 
         />
@@ -64,22 +64,22 @@ const NavMenu = () => {
 
           <GoogleExcel />
 
-          <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ history.push("/manage/floor"); }  }>
+          <Button color="dark"  style={btnStyle} onClick={e=>{ history.push("/manage/floor"); }  }>
           <div><FontAwesomeIcon icon={faTasks} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Piętro</span></div>
           </Button>
 
-          <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ history.push("/manage/workshop"); }  }>
+          <Button color="dark"  style={btnStyle} onClick={e=>{ history.push("/manage/workshop"); }  }>
           <div><FontAwesomeIcon icon={faHammer} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Warsztat</span></div>
              </Button>
        
-          <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ history.push("/manage/profile"); }  }>
+          <Button color="dark"  style={btnStyle} onClick={e=>{ history.push("/manage/profile"); }  }>
           <div><FontAwesomeIcon icon={faUser} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Profil</span></div>
           </Button>
 
-          <Button color="dark"  style={{minWidth:"100px"}} onClick={e=>{ localStorage.clear(); history.push("/"); }  }>       
+          <Button color="dark"  style={btnStyle} onClick={e=>{ localStorage.clear(); history.push("/"); }  }>       
           <div><FontAwesomeIcon icon={faSignOutAlt} className="fa-lg"/></div>
           <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Wyloguj się</span></div>
           </Button>
@@ -88,5 +88,11 @@ const NavMenu = () => {
       </Navbar>
     </div>
 )};
+
+const btnStyle = {
+  minWidth: "100px",
+  borderWidth: "0px"
+}
+
 
 export default NavMenu;

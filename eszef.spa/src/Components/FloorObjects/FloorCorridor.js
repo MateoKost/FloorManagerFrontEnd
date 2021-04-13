@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faPhone } from '@fortawesome/free-solid-svg-icons'
 
+import {
+  Button,
+} from "reactstrap";
+
 const FloorCorridor = (props) => {
   const [roomFocused, setRoomFocused] = useState(false);
   const [roomActive, setRoomActive] = useState(false);
   return (
-    <button
+    <Button color="light"
       className="corridor"
       //style={{backgroundColor: colors[props.status]}}
     //   onClick={() => props.onClick(props.number, props.status)}
@@ -26,9 +30,9 @@ const FloorCorridor = (props) => {
           ? <span style={{ color: "red" }}> <FontAwesomeIcon  icon={faPhone} /> </span>
             : ""
         } 
-
+{" "}
       {props.number}
-    </button>
+    </Button>
 )
 };
 
@@ -48,7 +52,9 @@ const styles = {
     //backgroundColor: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     fontSize: '10',
-    backgroundColor: focused | active ? '#FEFFDB' : "#E6E6E6",
+
+  
+    // backgroundColor: focused | active ? '#FEFFDB' : "#E6E6E6",
 
     gridArea: number,
     /*width: 40px;

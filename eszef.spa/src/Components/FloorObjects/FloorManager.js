@@ -417,14 +417,14 @@ class FloorManager extends Component {
         <Button
           color="success"
           size="sm"
-          className="mr-2"
+          className="mr-2"  outline
           onClick={this.setEditItemData.bind(this, id, idRoom, itemName)}
         >
           <FontAwesomeIcon icon={faPen} />
         </Button>
         <Button
           color="danger"
-          size="sm"
+          size="sm"  outline
           onClick={this.deleteItem.bind(this, id)}
         >
           <FontAwesomeIcon icon={faTrash} />
@@ -435,7 +435,7 @@ class FloorManager extends Component {
 
   renderSoldier = ({ idSoldier, name, lastName, rank, idRoom }) => (
     <tr key={idSoldier}>
-      <td>{rank}</td>
+      {/* <td>{rank}</td> */}
       <td>{name}</td>
       <td>{lastName}</td>
       <td>{idRoom}</td>
@@ -443,6 +443,7 @@ class FloorManager extends Component {
       <td>
         <Button
           color="success"
+          outline
           size="sm"
           className="mr-2"
           onClick={this.setEditSoldierData.bind(
@@ -459,6 +460,7 @@ class FloorManager extends Component {
         <Button
           color="danger"
           size="sm"
+          outline
          onClick={this.deleteSoldier.bind(this, { idSoldier })}
         >
           <FontAwesomeIcon icon={faTrash} />
@@ -492,7 +494,7 @@ class FloorManager extends Component {
         <div className="row">
           <div className="col-lg-2"></div>
           <div className="col-lg-8">
-            <h1>11 kompania</h1>
+            <h1>4-te piętro</h1>
             <FloorGrid selectRoom={this.selectRoom} />
             {alertVisibility && (
               <Alert
@@ -524,7 +526,7 @@ class FloorManager extends Component {
             : "Nie wybrano"}{" "}
         </h2>
         <Button
-          color="info"
+         color="info" 
           onClick={(e) => {
             this.setState({ selectedRoomId: "" });
           }}
@@ -560,9 +562,9 @@ class FloorManager extends Component {
 
           <div className="col-lg-6 ">
             <Navbar className="navbar-dark bg-dark" expand="md">
-              <NavbarBrand>Lista żołnierzy</NavbarBrand>
+              <NavbarBrand>Lista pracowników</NavbarBrand>
               <Nav className="mr-auto" navbar></Nav>
-              <Button color="info" onClick={this.toggleNewSoldierModal}>
+              <Button color="info"  onClick={this.toggleNewSoldierModal}>
                 <FontAwesomeIcon icon={faPlus} /> Dodaj 
               </Button>
 
@@ -573,7 +575,8 @@ class FloorManager extends Component {
               <Table striped>
                 <thead>
                   <tr>
-                    <th>Stopień</th> <th>Imię</th> <th>Nazwisko</th>{" "}
+                    {/* <th>Stopień</th> */}
+                     <th>Imię</th> <th>Nazwisko</th>{" "}
                     <th>Pokój</th> <th>Akcje</th>
                   </tr>
                 </thead>
@@ -591,7 +594,7 @@ class FloorManager extends Component {
             <Navbar className="navbar-dark bg-dark" expand="md">
               <NavbarBrand>Lista wyposażenia</NavbarBrand>
               <Nav className="mr-auto" navbar></Nav>
-              <Button color="info" onClick={this.toggleNewItemModal}>
+              <Button color="info"  onClick={this.toggleNewItemModal}>
                 <FontAwesomeIcon icon={faPlus} /> Dodaj
               </Button>
 

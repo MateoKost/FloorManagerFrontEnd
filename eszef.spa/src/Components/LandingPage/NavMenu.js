@@ -16,14 +16,13 @@ import {
 
 const NavMenu = (props) => {
 
-  const history = useHistory();
+  const banner = process.env.PUBLIC_URL + '/Assets/banner_epic.svg';
 
   return (
 
 <div>
       <Navbar className="navbar-dark bg-dark"  expand="md">
-      <img  className="logo" src={eszef}  alt={"Eszef"} />
-        <NavbarBrand href="/">E-Szef</NavbarBrand>
+      <NavbarBrand href="/"><img  className="dhda" src={banner} alt={"Eszef"} /> </NavbarBrand> 
         <NavbarToggler 
         // onClick={toggle} 
         />
@@ -37,30 +36,13 @@ const NavMenu = (props) => {
             <NavItem>
               <NavLink href="https://github.com/patryklorbiecki1/Eszef">GitHub</NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
           </Nav>
 
 
      
 
 
-          <Button color="dark" style={{minWidth:"100px"}} onClick={props.onClick} >
+          <Button color="dark" style={btnStyle} onClick={props.onClick} >
             <div><FontAwesomeIcon icon={faSignInAlt} className="fa-lg"/></div>
             <div style={{marginTop: -4}}><span style={{fontSize: 12}}>Zaloguj</span></div>
             </Button>
@@ -69,5 +51,10 @@ const NavMenu = (props) => {
       </Navbar>
     </div>
 )};
+
+const btnStyle = {
+  minWidth: "100px",
+  borderWidth: "0px"
+}
 
 export default NavMenu;

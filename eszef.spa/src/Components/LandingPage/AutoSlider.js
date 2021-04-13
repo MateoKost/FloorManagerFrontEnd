@@ -24,25 +24,26 @@ const banknote = process.env.PUBLIC_URL + '/Assets/banknote.jpg';
 //const tool = process.env.PUBLIC_URL + '/Assets/tool.jpg';
 //const coffee = render(<img src={ process.env.PUBLIC_URL + '/Assets/coffee.png' } /> );
 
+const office = process.env.PUBLIC_URL + '/Assets/office.jpg';
 
 const items = [
   {
-    src: wp ,//<img src={ process.env.PUBLIC_URL + '/Assets/coffee.png' } />,
+    src: office,//<img src={ process.env.PUBLIC_URL + '/Assets/coffee.png' } />,
     altText: 'Slide 1',
-    caption: 'Przeglądaj wyposażenie każdego pokoju',
-    header: 'Zarządzaj izbami żołnierskimi',
+    caption: <span class="ke">Zarządzaj pomieszczeniami służbowymi firmy</span>,
+    header: <span class="ke">Przegląd wyposażenia pokoi</span>,
   },
   {
     src: wood ,
     altText: 'alt Zleć naprawy zepsutego wyposażenia',
-    header: 'Naprawa sprzętu',
-    caption: 'Zleć naprawy zepsutego wyposażenia'
+    header: <span class="ke">Naprawa sprzętu</span>,
+    caption: <span class="ke">Zleć naprawy zepsutego wyposażenia</span>
   },
   {
     src: banknote,
     altText: 'Slide 3',
-    caption: 'Zapłać drogą eletroniczną za zlecone zamówienia',
-    header: 'Płatność elektroniczna',
+    caption: <span class="ke">Zapłać drogą eletroniczną za zlecone zamówienia</span>,
+    header: <span class="ke">Płatność elektroniczna</span>,
   }
 ];
 

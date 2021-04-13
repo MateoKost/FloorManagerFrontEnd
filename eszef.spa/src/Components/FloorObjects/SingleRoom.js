@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import {
+  Button,
+} from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faShieldAlt, faToilet, faStream, faCrown, faShower, faPhone
   } from '@fortawesome/free-solid-svg-icons'
@@ -14,8 +16,9 @@ const SingleRoom = (props) => {
     };
 
     return (
-      <button
-        className="room"
+      <Button color="dark"
+        disabled={false}
+        className="room" 
         //style={{backgroundColor: colors[props.status]}}
       //   onClick={() => props.onClick(props.number, props.status)}
      
@@ -35,12 +38,12 @@ const SingleRoom = (props) => {
              : props.type==="stars" ?  <FontAwesomeIcon icon={faStar} />
                : ""
         } 
-       
+        {" "}
         {props.number}
 
         
 
-      </button>
+      </Button>
     )
 };
 
@@ -62,7 +65,8 @@ const styles = {
     //backgroundColor: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     fontSize: '10',
-    backgroundColor: focused | active ? '#73462C' : '#C3EDB6',
+    border: `1px solid black`,
+    // backgroundColor: focused | active ? '#73462C' : '#C3EDB6',
 
     gridArea: number,
     /*width: 40px;
