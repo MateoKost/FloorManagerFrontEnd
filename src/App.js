@@ -1,45 +1,46 @@
 import './App.css';
 
-import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
-
-import { Button } from 'reactstrap';
-
-
+import { BrowserRouter as Router, Route,} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Component } from 'react';
 
-import LandingPage from './Components/Views/LandingPage/LandingPage'
-//import FloorManager from './Components/FloorManager'
+import LandingPage from './LandingPage/LandingPage'
 
-import  axios  from 'axios';
-import LoggedIn from './Components/LoggedIn';
+// import FloorManager from './FloorPanel/FloorManager';
+import LoggedIn from "./FloorPanel/LoggedIn";
+import { AuthProvider } from "./Authorization/Auth";
+import PrivateRoute from "./Authorization/PrivateRoute";
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      history: useHistory,
-  }
-}
+import NavMenu from './NavMenu/NavMenu';
+import { ModalProvider } from "./Modals/ModalContext";
 
-  componentDidMount(){
-    
-  }
+function App() {
 
-getItems = async() => {
- 
-}
-
-  render() {
   return (
-    <div className="App conta">
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/manage" component={LoggedIn} />
-      </Switch>
+    <div className="container-fluid p-0" >
+      <AuthProvider>
+        <Router>
+          <div>
+          <ModalProvider>
+            <NavMenu/>
+            <Route exact path="/" component={LandingPage} />
+          </ModalProvider>
+            <PrivateRoute
+              exact
+              path="/floor"
+              component={() => (
+                <LoggedIn /> 
+                // <FireDataProvider>
+                // <Viewer/>
+                // <></>
+                // <FloorManager/>
+                // </FireDataProvider>
+              )}
+            />
+          </div>
+        </Router>
+      </AuthProvider>
     </div>
   );
-}
 }
 
 export default App;
