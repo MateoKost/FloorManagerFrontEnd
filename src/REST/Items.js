@@ -22,8 +22,8 @@ const ACTIONS = {
     endpoint: serverURL + "/item",
     method: "GET",
   },
-  UPDATE_ITEM: { type: "edit-item", endpoint: serverURL, method:"PUT"},
-  DELETE_ITEM: { type: "delete-tem", endpoint: serverURL },
+  UPDATE_ITEM: { type: "edit-item", endpoint: serverURL + "/item", method:"PUT"},
+  DELETE_ITEM: { type: "delete-tem", endpoint: serverURL + "/item",  method:"DELETE"  },
 };
 
 export const ItemsProvider = ({ children }) => {
@@ -59,9 +59,17 @@ export const ItemsProvider = ({ children }) => {
       }
       case ACTIONS.UPDATE_ITEM.type: {
         const { endpoint, method } = ACTIONS.UPDATE_ITEM;
-        await client(endpoint, method).then((result) => {
+        await client(endpoint, method, {body:payload}).then((result) => {
           console.log(result);
           // setitems({ data: result.data, status: "fulfilled" });
+          window.location.reload();
+        });
+        break;
+      }
+      case ACTIONS.DELETE_ITEM.type: {
+        const { endpoint, method } = ACTIONS.DELETE_ITEM;
+        await client(endpoint+"/"+payload.id, method).then((result) => {
+          console.log(result);
           window.location.reload();
         });
         break;

@@ -20,6 +20,7 @@ import {
 import Floor from './Floor';
 
 import { ItemsProvider } from "../REST/Items";
+import { PersonnelProvider } from "../REST/Personnel";
 
 // import Workshop from "../Workshop/Workshop";
 // import NMLoggedIn from "../NavMenu/NMLoggedIn";
@@ -34,7 +35,9 @@ const LoggedIn = () => {
           {/* <Route path="/manage/workshop" component={Workshop} /> */}
 
           <ItemsProvider>
+            <PersonnelProvider>
           <Route exact path="/floor" component={Floor} />
+          </PersonnelProvider>
           </ItemsProvider>
           {/* <Route path="/dashboard" component={<h1>Piętro</h1>} /> */}
           {/* <Route path="/manage/profile" component={UserProfile} /> */}

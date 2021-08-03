@@ -5,8 +5,8 @@ import { NavbarBrand, Nav } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import AddModal from "./AddModal";
-import EditModal from "./EditModal";
+import AddItemModal from "./AddItemModal";
+import EditItemModal from "./EditItemModal";
 import ItemRow from "./ItemRow";
 import { ItemsContext } from '../../REST/Items';
 
@@ -60,10 +60,8 @@ export const ItemTable = () => {
 
   return (
     <div className="col-lg-6">
-      <AddModal/>
- 
-      <EditModal
-      />
+      <AddItemModal/>
+      <EditItemModal/>
 
       <Navbar className="navbar-dark bg-dark" expand="md">
         <NavbarBrand>Lista wyposażenia</NavbarBrand>

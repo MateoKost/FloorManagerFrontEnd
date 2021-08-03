@@ -11,7 +11,7 @@ export const ItemRow = (props) => {
   const icon = itemIconNames.find((item) => item.name === itemName);
 
   const { setEditItemModal,
-    setEditItemData } = useContext(ItemsContext);
+    setEditItemData, clientHandler, ACTIONS } = useContext(ItemsContext);
 
   return (
     <tr key={id} style={{ backgroundColor: !isRepaired && "#FFF3DB" }}>
@@ -31,6 +31,7 @@ export const ItemRow = (props) => {
           size="sm"
           className="mr-2"
           outline
+          disabled={true}
           onClick={()=>{setEditItemData({id, idRoom, itemName}); setEditItemModal(true);}}
         >
           <FontAwesomeIcon icon={faPen} />
@@ -40,6 +41,7 @@ export const ItemRow = (props) => {
           size="sm"
           className="mr-2"
           outline
+          onClick={  () => { clientHandler({ action: ACTIONS.DELETE_ITEM, payload: {id: id } }); } }
           // onClick={()=>props.onDelete.bind(this, {id, idRoom, itemName})}
         >
           <FontAwesomeIcon icon={faTrash} />

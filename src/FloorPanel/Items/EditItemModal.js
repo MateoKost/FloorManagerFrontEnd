@@ -23,10 +23,15 @@ const EditModal = () => {
       event.preventDefault();
       const { id,idRoom, itemName } = event.target.elements;
 
-      console.log(idRoom.value);
-      console.log(id.value);
+      let params = {
+        itemName: itemName.value,
+        idRoom: parseInt(idRoom.value),
+      };
 
-      // clientHandler({action:ACTIONS.UPDATE_ITEM, payload: {idRoom:parseInt(idRoom.value),id:id.value} })
+      // console.log(idRoom.value);
+      // console.log(id.value);
+
+      // clientHandler({action:ACTIONS.UPDATE_ITEM, payload: params })
     
     };
     

@@ -471,7 +471,7 @@ class FloorManager extends Component {
           Pokaż ze wszystkich pokoi
         </Button>
         <div className="row  p-4">
-          <AddModal
+          {/* <AddModal
             onEnter={this.addItem}
             onCancel={this.toggleNewItemModal}
             newItemModal={this.state.newItemModal}
@@ -481,9 +481,9 @@ class FloorManager extends Component {
             editItemData={this.state.editItemData}
             editItemModal={this.state.editItemModal}
             onCancel={this.toggleEditItemModal}
-          />
+          /> */}
 
-          <AddSoldierModal
+          {/* <AddSoldierModal
             onEnter={this.addSoldier}
            // newSoldierData={this.state.newSoldierData}
             newSoldierModal={this.state.newSoldierModal}
@@ -495,7 +495,7 @@ class FloorManager extends Component {
             editSoldierData={this.state.editSoldierData}
             editSoldierModal={this.state.editSoldierModal}
             onCancel={this.toggleEditSoldierModal}
-          />
+          /> */}
 
           <div className="col-lg-6 ">
             <Navbar className="navbar-dark bg-dark" expand="md">

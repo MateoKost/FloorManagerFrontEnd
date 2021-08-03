@@ -1,39 +1,21 @@
-import React, { Component, useContext } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import '../App.css';
-import { Alert, Table, Button, Navbar } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faTrash,
-  faPen,
-  faChair,
-} from "@fortawesome/free-solid-svg-icons";
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory, Link
-} from "react-router-dom";
 
 import { ItemsContext } from '../REST/Items';
+import { PersonnelContext } from '../REST/Personnel';
 
 import ItemTable from "./Items/ItemTable";
-
-// import Workshop from "../Workshop/Workshop";
-// import NMLoggedIn from "../NavMenu/NMLoggedIn";
-// import FloorManager from "./FloorManager";
-// import UserProfile from "../Profile/UserProfile";
-// import Calendar from '../Calendar/Calendar';
+import PersonnelTable from "./Personnel/PersonnelTable";
 
 const Floor = () => {
 
     const {items} = useContext(ItemsContext);
+    const {personnel} = useContext(PersonnelContext);
 
     return (
-      <div >
+      <div className="row">
        {!items.status === "pending" ? "loading..." : <ItemTable/> }
+       {!personnel.status === "pending" ? "loading..." : <PersonnelTable/> }
       </div>
     );
   }
