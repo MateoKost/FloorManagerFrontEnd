@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChair } from "@fortawesome/free-solid-svg-icons";
 import itemIconNames from "./IconNames";
-import "./table.css";
+import "../../Utilities/table.css"
 import { ItemsContext } from '../../REST/Items';
 
 export const ItemRow = (props) => {

@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen, faChair } from "@fortawesome/free-solid-svg-icons";
-import "./table.css";
+import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import "../../Utilities/table.css"
 import { PersonnelContext } from '../../REST/Personnel';
 
 export const PersonnelRow = (props) => {
@@ -23,7 +23,6 @@ export const PersonnelRow = (props) => {
           className="mr-2"
           outline
           onClick={()=>{setEditPersonnelData({idSoldier, name, lastName, rank, idRoom}); setEditPersonnelModal(true);}}
-            //       onClick={()=>{setEditItemData({id, idRoom, itemName}); setEditItemModal(true);}}
       >
         <FontAwesomeIcon icon={faPen} />
       </Button>

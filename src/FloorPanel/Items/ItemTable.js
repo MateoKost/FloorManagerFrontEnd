@@ -10,6 +10,8 @@ import EditItemModal from "./EditItemModal";
 import ItemRow from "./ItemRow";
 import { ItemsContext } from '../../REST/Items';
 
+import SpinnerGroup from "../../Utilities/SpinnerGroup";
+
 export const ItemTable = () => {
 
   const { items, selectedRoom, setNewItemModal } = useContext(ItemsContext);
@@ -44,7 +46,7 @@ export const ItemTable = () => {
   let content;
   if (items.status==="pending") {
     console.log("pending");
-    content = <div className="loader">Loading...</div>;
+    content = <SpinnerGroup/>;
   } else if (items.status === "fulfilled") {
     console.log("fulfilled");
     // console.log(items.data);
@@ -59,7 +61,7 @@ export const ItemTable = () => {
   }
 
   return (
-    <div className="col-lg-6">
+    <div className="col-12 p-0">
       <AddItemModal/>
       <EditItemModal/>
 
@@ -69,6 +71,7 @@ export const ItemTable = () => {
         <Button
           color="info"
           onClick={() => setNewItemModal(true)}
+          disabled={items.status === "fulfilled" ? "" : "true" }
         >
           <FontAwesomeIcon icon={faPlus} /> Dodaj
         </Button>
@@ -76,7 +79,7 @@ export const ItemTable = () => {
 
       <Table striped >
         <thead>
-          idroom{selectedRoom}
+          {/* idroom{selectedRoom} */}
           <tr>
             <th>#</th>
             <th>Pokój</th>

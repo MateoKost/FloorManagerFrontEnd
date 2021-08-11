@@ -34,11 +34,16 @@ export const ItemsProvider = ({ children }) => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [newItemModal, setNewItemModal] = useState(false);
   const [editItemModal, setEditItemModal] = useState(false);
-  const [ editItemData, setEditItemData ] = useState({id:"", idRoom:"", itemName:""});
+  const [editItemData, setEditItemData ] = useState({id:"", idRoom:"", itemName:""});
+
+  // const filterGETS = (idRoom) => {
+  //   setSelectedRoom(idRoom);
+  //   // .then( clientHandler({ action: ACTIONS.READ_ITEMS}).then(  ) )
+  // }
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_ITEMS});
-  }, []);
+  }, [selectedRoom]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {
@@ -53,10 +58,14 @@ export const ItemsProvider = ({ children }) => {
       case ACTIONS.READ_ITEMS.type: {
         const { endpoint, method } = ACTIONS.READ_ITEMS;
         await client(endpoint, method).then((result) => {
-          setitems({ data: result.data, status: "fulfilled" });
+          let filterData =  selectedRoom === '' ? result.data : result.data.filter( (item) => item.idRoom === selectedRoom )
+          setitems({ data: filterData, status: "fulfilled" });
         });
         break;
       }
+
+      // find((item) => item.name === itemName)
+
       case ACTIONS.UPDATE_ITEM.type: {
         const { endpoint, method } = ACTIONS.UPDATE_ITEM;
         await client(endpoint, method, {body:payload}).then((result) => {
@@ -93,7 +102,10 @@ export const ItemsProvider = ({ children }) => {
         newItemModal,
         setNewItemModal,
 
-        editItemModal, editItemData, setEditItemModal,
+        editItemModal, 
+        setEditItemModal,
+        
+        editItemData, 
         setEditItemData
 
       }}

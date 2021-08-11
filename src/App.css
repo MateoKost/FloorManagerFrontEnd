@@ -58,3 +58,10 @@
   color:rgb(134, 201, 255);
   text-decoration:underline;
 }
+
+.row {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+body { overflow-x: hidden; width: 100vw;}

@@ -35,11 +35,12 @@ export const PersonnelProvider = ({ children }) => {
   const [newPersonnelModal, setNewPersonnelModal] = useState(false);
   const [editPersonnelModal, setEditPersonnelModal] = useState(false);
   const [editPersonnelData, setEditPersonnelData ] = useState({idSoldier:"", name:"", lastName:"", rank:"", idRoom:""});
+  const [alertStatus, setAlertStatus ] = useState({visibility:false});
   // const [personnelToRemove, setPersonnelToRemove ] = useState("");
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_PERSONNEL});
-  }, []);
+  }, [selectedRoom]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {
@@ -47,6 +48,7 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.CREATE_PERSONNEL;
         await client(endpoint, method, {body:payload}).then((result) => {
           console.log(result);
+          setAlertStatus({visibility:true})
           window.location.reload();
         });
         break;
@@ -54,7 +56,8 @@ export const PersonnelProvider = ({ children }) => {
       case ACTIONS.READ_PERSONNEL.type: {
         const { endpoint, method } = ACTIONS.READ_PERSONNEL;
         await client(endpoint, method).then((result) => {
-            setPersonnel({ data: result.data, status: "fulfilled" });
+            let filterData =  selectedRoom === '' ? result.data : result.data.filter( (employee) => employee.idRoom === selectedRoom )
+            setPersonnel({ data: filterData, status: "fulfilled" });
         });
         break;
       }
@@ -62,6 +65,7 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.UPDATE_PERSONNEL;
         await client(endpoint, method, {body:payload}).then((result) => {
           console.log(result);
+          setAlertStatus({visibility:true})
           window.location.reload();
         });
         break;
@@ -70,6 +74,7 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.DELETE_PERSONNEL;
         await client(endpoint+"/"+payload.idSoldier, method).then((result) => {
           console.log(result);
+          setAlertStatus({visibility:true})
           window.location.reload();
         });
         break;
@@ -99,7 +104,9 @@ export const PersonnelProvider = ({ children }) => {
         setEditPersonnelModal,
 
         editPersonnelData,
-        setEditPersonnelData
+        setEditPersonnelData,
+
+        alertStatus
         
       }}
     >
