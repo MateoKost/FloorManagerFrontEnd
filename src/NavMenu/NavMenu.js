@@ -18,17 +18,15 @@ import {
   faSignInAlt,
   faHammer,
   faTasks,
-  faCalendarAlt
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./NM.css";
 
-import {
-  useHistory
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import {ModalContext} from '../Modals/ModalContext';
-import {AuthContext} from "../Authorization/Auth";
+import { ModalContext } from "../Modals/ModalContext";
+import { AuthContext } from "../Authorization/Auth";
 
 const dhda_banner = process.env.PUBLIC_URL + "/Assets/banner_epic.svg";
 
@@ -37,7 +35,7 @@ const NavMenu = () => {
   const { toggleSignInModal } = useContext(ModalContext);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  let history=useHistory();
+  let history = useHistory();
 
   return (
     <div>
@@ -54,7 +52,7 @@ const NavMenu = () => {
               </NavLink>
             </NavItem>
           </Nav>
-          { currentUser ? (
+          {currentUser ? (
             <span>
               <NMButton
                 disabled={false}

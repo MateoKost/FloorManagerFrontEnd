@@ -26,8 +26,6 @@ import {
 
 import itemIconNames from "../FloorObjects/IconNames";
 
-
-
 const stripePromise = loadStripe(
   "pk_test_51I9t89BhNjZNZazmTpkgwWIlp5b7jQpVBPJBQkq2Zy5nFEyMWbZG2Ix1IYmzvr9IgwScL4XDcmZmh8iDEK2OttsP00cCRPeNZZ"
 );
@@ -46,50 +44,44 @@ class Workshop extends Component {
       itemsToRepair: [],
       itemNames: itemIconNames,
       cost: 0.0,
-      payed:false,
-      loggedInData:{
+      payed: false,
+      loggedInData: {
         email: "",
         userName: "",
         lastName: "",
         company: "",
-        cost: ""
+        cost: "",
       },
     };
 
     //this.renderIcon = this.renderIcon.bind(this);
-
   }
 
-
   getUserParams = async () => {
+    let email = JSON.parse(localStorage.getItem("login")).loginData.email;
 
-    let email = JSON.parse( localStorage.getItem( "login" )).loginData.email;
-
-   // console.log( email )
-
+    // console.log( email )
 
     await axios
-      .get(`https://localhost:5001/login/user/${email }`, {
+      .get(`https://localhost:5001/login/user/${email}`, {
         headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("login")).store,
         },
       })
       .then((response) => {
-       
         this.setState({
           loggedInData: {
             email: response.data.email,
             userName: response.data.userName,
             lastName: response.data.lastName,
             company: response.data.company,
-            cost: response.data.cost
-          }       
+            cost: response.data.cost,
+          },
         });
         //console.log( this.state.loggedInData )
       });
   };
-
-
 
   toggleAlertVisibility() {
     this.setState({ alertVisibility: false });
@@ -101,18 +93,17 @@ class Workshop extends Component {
     const query = new URLSearchParams(window.location.search);
 
     if (query.get("success")) {
-      this.getUserParams().then(  e=>   this.editUserCostZero() );
-     // this.editUserCost(0.00);
-     
+      this.getUserParams().then((e) => this.editUserCostZero());
+      // this.editUserCost(0.00);
+
       //this.getUserParams();
       //this.getItems();
       this.setState({
         message: "Order placed! You will receive an email confirmation.",
         alertColor: "success",
         back: true,
-        payed:true,
+        payed: true,
       });
-      
     }
 
     if (query.get("canceled")) {
@@ -120,7 +111,7 @@ class Workshop extends Component {
         message: "Order cancelled!",
         alertColor: "warning",
         back: true,
-        payed:false,
+        payed: false,
       });
     }
   }
@@ -133,7 +124,9 @@ class Workshop extends Component {
     //console.log(parseInt(this.state.loggedInData.cost));
 
     const response = await axios.post(
-      `https://localhost:5001/create-checkout-session/${parseInt(this.state.loggedInData.cost*100)}`,
+      `https://localhost:5001/create-checkout-session/${parseInt(
+        this.state.loggedInData.cost * 100
+      )}`,
       this.state.cost,
       {
         headers: {
@@ -146,12 +139,14 @@ class Workshop extends Component {
 
     //const session = await response.json();
     // When the customer clicks on the button, redirect them to Checkout.
-    const result = await stripe.redirectToCheckout({
-      sessionId: response.data.id,
-    }).then(e=>{
-      // this.editUserCost(0.00);
-      // this.editUserCostZero();
-    });
+    const result = await stripe
+      .redirectToCheckout({
+        sessionId: response.data.id,
+      })
+      .then((e) => {
+        // this.editUserCost(0.00);
+        // this.editUserCostZero();
+      });
 
     //console.log(result);
 
@@ -159,23 +154,18 @@ class Workshop extends Component {
     }
   };
 
-
-  repair = async (id) =>{
-
-    
-    await axios.put(
-      `https://localhost:5001/item/${id}`, "",{
+  repair = async (id) => {
+    await axios
+      .put(`https://localhost:5001/item/${id}`, "", {
         headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store
-        }
-      }
-    ).then((_) => this.getItems() )
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+        },
+      })
+      .then((_) => this.getItems());
   };
 
-
-
- editUserCost  = async ( singleCost ) => {
-
+  editUserCost = async (singleCost) => {
     const { loggedInData, cost } = this.state;
 
     let params2 = {
@@ -183,7 +173,7 @@ class Workshop extends Component {
       userName: loggedInData.userName,
       lastName: loggedInData.lastName,
       company: parseInt(loggedInData.company),
-      cost: parseFloat(singleCost)
+      cost: parseFloat(singleCost),
     };
 
     //console.log(params2);
@@ -191,20 +181,20 @@ class Workshop extends Component {
     await axios
       .put("https://localhost:5001/login/user/", params2, {
         headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("login")).store,
         },
       })
       .then((_) => {
-          this.getUserParams();
-      //  localStorage.clear(); 
+        this.getUserParams();
+        //  localStorage.clear();
         // this.setState({
         //   dataChanged: true
         // })
       });
   };
 
-  editUserCostZero  = async ( ) => {
-
+  editUserCostZero = async () => {
     const { loggedInData, cost } = this.state;
 
     console.log(loggedInData);
@@ -214,7 +204,7 @@ class Workshop extends Component {
       userName: loggedInData.userName,
       lastName: loggedInData.lastName,
       company: parseInt(loggedInData.company),
-      cost: 0.00
+      cost: 0.0,
     };
 
     console.log(params2);
@@ -222,24 +212,23 @@ class Workshop extends Component {
     await axios
       .put("https://localhost:5001/login/user/", params2, {
         headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("login")).store,
         },
       })
       .then((_) => {
-          this.getUserParams();
-      //  localStorage.clear(); 
+        this.getUserParams();
+        //  localStorage.clear();
         // this.setState({
         //   dataChanged: true
         // })
       });
   };
 
-
-
   add = () => {
     this.props.onButtonClick(this.input.value);
     this.input.value = "";
-  }
+  };
 
   renderRow = ({ id, idRoom, itemName, isRepaired }) => (
     <tr key={id} style={{ backgroundColor: !isRepaired && "#FFF3DB" }}>
@@ -266,7 +255,7 @@ class Workshop extends Component {
               //   cost: cost + 20.99,
               // });
               this.repair(id);
-              this.editUserCost(this.state.loggedInData.cost+20.99);
+              this.editUserCost(this.state.loggedInData.cost + 20.99);
             }
           }}
           disabled={isRepaired}
@@ -298,24 +287,19 @@ class Workshop extends Component {
       });
   };
 
-
   dudu = () => {
     this.getUserParams();
     this.editUserCostZero();
     this.getUserParams();
-      return (<h1>001</h1>)
+    return <h1>001</h1>;
   };
-
 
   render() {
     return (
       <div>
         {/* { this.state.back && <Redirect to="/manage/workshop" />} */}
 
-  {/* {this.state.payed && this.dudu } */}
-
-
-    
+        {/* {this.state.payed && this.dudu } */}
 
         {this.state.message && (
           <Alert
