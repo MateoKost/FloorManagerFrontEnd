@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext, useReducer } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
-import SpinnerGroup from "../Utilities/SpinnerGroup";
 import "../Utilities/Spinner.css";
 
 import { AuthContext } from "../Authorization/Auth";
@@ -29,18 +28,16 @@ const ACTIONS = {
 export const PersonnelProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
 
-  // const [items, dispatch ] = useReducer(reducer, {data:[], pending: true})
   const [personnel, setPersonnel] = useState({ data: [], status: "pending" });
   const [selectedRoom, setSelectedRoom] = useState("");
   const [newPersonnelModal, setNewPersonnelModal] = useState(false);
   const [editPersonnelModal, setEditPersonnelModal] = useState(false);
   const [editPersonnelData, setEditPersonnelData ] = useState({idSoldier:"", name:"", lastName:"", rank:"", idRoom:""});
-  const [alertStatus, setAlertStatus ] = useState({visibility:false});
-  // const [personnelToRemove, setPersonnelToRemove ] = useState("");
+  const [alertStatus, setAlertStatus ] = useState({visibility:false, entity: "soldier", type: "success"});
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_PERSONNEL});
-  }, [selectedRoom]);
+  }, [selectedRoom, alertStatus]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {
@@ -48,8 +45,8 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.CREATE_PERSONNEL;
         await client(endpoint, method, {body:payload}).then((result) => {
           console.log(result);
-          setAlertStatus({visibility:true})
-          window.location.reload();
+          setEditPersonnelData({ name:payload.name, lastName:payload.lastName, rank:payload.rank, idRoom:payload.idRoom })
+          setAlertStatus({visibility:true, entity: "soldier", type: "success"})
         });
         break;
       }
@@ -57,7 +54,7 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.READ_PERSONNEL;
         await client(endpoint, method).then((result) => {
             let filterData =  selectedRoom === '' ? result.data : result.data.filter( (employee) => employee.idRoom === selectedRoom )
-            setPersonnel({ data: filterData, status: "fulfilled" });
+            setPersonnel({ data: filterData, entity: "soldier", status: "fulfilled" });
         });
         break;
       }
@@ -65,8 +62,9 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.UPDATE_PERSONNEL;
         await client(endpoint, method, {body:payload}).then((result) => {
           console.log(result);
-          setAlertStatus({visibility:true})
-          window.location.reload();
+          setEditPersonnelData({ name:payload.name, lastName:payload.lastName, rank:payload.rank, idRoom:payload.idRoom })
+          setAlertStatus({visibility:true, entity: "soldier", type: "info"})
+          // window.location.reload();
         });
         break;
       }
@@ -74,8 +72,9 @@ export const PersonnelProvider = ({ children }) => {
         const { endpoint, method } = ACTIONS.DELETE_PERSONNEL;
         await client(endpoint+"/"+payload.idSoldier, method).then((result) => {
           console.log(result);
-          setAlertStatus({visibility:true})
-          window.location.reload();
+          setEditPersonnelData(payload)
+          setAlertStatus({visibility:true, entity: "soldier", type: "warning"})
+          // window.location.reload();
         });
         break;
       }

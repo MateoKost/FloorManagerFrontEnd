@@ -31,7 +31,7 @@ export const PersonnelRow = (props) => {
           size="sm"
           className="mr-2"
           outline
-       onClick={  () => { clientHandler({ action: ACTIONS.DELETE_PERSONNEL, payload: {idSoldier: idSoldier } }); } }
+       onClick={  () => { clientHandler({ action: ACTIONS.DELETE_PERSONNEL, payload: {idSoldier: idSoldier, rank: rank, name: name, lastName:lastName, idRoom: idRoom } }); } }
       >
         <FontAwesomeIcon icon={faTrash} />
       </Button>

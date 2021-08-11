@@ -35,23 +35,21 @@ export const ItemsProvider = ({ children }) => {
   const [newItemModal, setNewItemModal] = useState(false);
   const [editItemModal, setEditItemModal] = useState(false);
   const [editItemData, setEditItemData ] = useState({id:"", idRoom:"", itemName:""});
-
-  // const filterGETS = (idRoom) => {
-  //   setSelectedRoom(idRoom);
-  //   // .then( clientHandler({ action: ACTIONS.READ_ITEMS}).then(  ) )
-  // }
+  const [alertStatus, setAlertStatus ] = useState({visibility:false, entity: "item", type: "success"});
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_ITEMS});
-  }, [selectedRoom]);
+  }, [selectedRoom, alertStatus]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {
       case ACTIONS.CREATE_ITEM.type: {
         const { endpoint, method } = ACTIONS.CREATE_ITEM;
         await client(endpoint, method, {body:payload}).then((result) => {
-          console.log(result);
-          window.location.reload();
+          // console.log(result);
+          setEditItemData({itemName:payload.itemName, idRoom: payload.idRoom})
+          setAlertStatus({visibility:true, entity: "item", type: "success"})
+          // window.location.reload();
         });
         break;
       }
@@ -69,17 +67,21 @@ export const ItemsProvider = ({ children }) => {
       case ACTIONS.UPDATE_ITEM.type: {
         const { endpoint, method } = ACTIONS.UPDATE_ITEM;
         await client(endpoint, method, {body:payload}).then((result) => {
-          console.log(result);
+          // console.log(result);
           // setitems({ data: result.data, status: "fulfilled" });
-          window.location.reload();
+          // window.location.reload();
+          setEditItemData({itemName:payload.itemName, idRoom: payload.idRoom})
+          setAlertStatus({visibility:true, entity: "item", type: "info"})
         });
         break;
       }
       case ACTIONS.DELETE_ITEM.type: {
         const { endpoint, method } = ACTIONS.DELETE_ITEM;
         await client(endpoint+"/"+payload.id, method).then((result) => {
-          console.log(result);
-          window.location.reload();
+          // console.log(result);
+          setEditItemData({id: payload.id, itemName:payload.itemName, idRoom: payload.idRoom})
+          setAlertStatus({visibility:true, entity: "item", type: "warning"})
+          // window.location.reload();
         });
         break;
       }
@@ -106,7 +108,9 @@ export const ItemsProvider = ({ children }) => {
         setEditItemModal,
         
         editItemData, 
-        setEditItemData
+        setEditItemData,
+
+        alertStatus
 
       }}
     >

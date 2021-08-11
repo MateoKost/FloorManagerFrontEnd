@@ -5,21 +5,12 @@ import FloorStaircase from "./FloorStaircase";
 import "./Floor.css";
 
 const FloorGrid = (props) => {
-  const [roomActiveId, setRoomActiveId] = useState(0);
-
   function selectRoom(roomId) {
-    // this.setState({
-    //   selectedRoomId: ! roomId
-    // });
-    setRoomActiveId(roomId);
     props.selectRoom(roomId);
   }
 
   return (
-    <div
-      className="floorGrid"
-      // onClick={() => props.onClick.bind(this, 1)}
-    >
+    <div className="floorGrid">
       {[...Array(24).keys()].map((number) => (
         <SingleRoom
           key={number}
@@ -35,10 +26,7 @@ const FloorGrid = (props) => {
               ? "stars"
               : "none"
           }
-          // dede={setRoomActiveId}
           selectRoom={selectRoom}
-          // onClick={() => props.onClick.bind(this, number)}
-          // onClick={() => props.onClick(number)}
         />
       ))}
       {[...Array(3).keys()].map((number) => (
@@ -51,18 +39,8 @@ const FloorGrid = (props) => {
       {[...Array(2).keys()].map((number) => (
         <FloorStaircase key={number} number={number} />
       ))}
-
-      {/* <h1>{roomActiveId}</h1> */}
     </div>
   );
 };
-// // Color Theme
-// const colors = {
-//     available: 'lightgray',
-//     used: 'lightgreen',
-
-//     wrong: 'lightcoral',
-//     candidate: 'deepskyblue',
-// };
 
 export default FloorGrid;

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback, useMemo } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import React, { useContext } from "react";
 import { Table, Button, Navbar } from "reactstrap";
 import { NavbarBrand, Nav } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,34 +13,7 @@ import SpinnerGroup from "../../Utilities/SpinnerGroup";
 
 export const ItemTable = () => {
 
-  const { items, selectedRoom, setNewItemModal } = useContext(ItemsContext);
-
-  // let content;
-
-  // const content = useCallback(
-  //   () => {
- 
-  //     if (items.status==="pending") {
-  //       console.log("pending");
-  //       return <div className="loader">Loading...</div>;
-  //     } else if (items.status === "fulfilled") {
-  //       console.log("fulfilled");
-  //       console.log(items.data);
-  //       return
-  //         ( items.data &&   items.data.map((item) => (
-  //             <ItemRow
-  //               item={item}
-  //             />
-  //           )) )
-  //     } else if (items.status === "failed") {
-  //       return <div>error!!!</div>;
-  //     }
-
-
-
-  //   },
-  //   [],
-  // );
+  const { items, setNewItemModal } = useContext(ItemsContext);
 
   let content;
   if (items.status==="pending") {
@@ -49,7 +21,6 @@ export const ItemTable = () => {
     content = <SpinnerGroup/>;
   } else if (items.status === "fulfilled") {
     console.log("fulfilled");
-    // console.log(items.data);
     content =
       items.data &&   items.data.map((item) => (
           <ItemRow
@@ -79,7 +50,6 @@ export const ItemTable = () => {
 
       <Table striped >
         <thead>
-          {/* idroom{selectedRoom} */}
           <tr>
             <th>#</th>
             <th>Pokój</th>

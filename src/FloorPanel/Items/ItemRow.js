@@ -41,7 +41,7 @@ export const ItemRow = (props) => {
           size="sm"
           className="mr-2"
           outline
-          onClick={  () => { clientHandler({ action: ACTIONS.DELETE_ITEM, payload: {id: id } }); } }
+          onClick={  () => { clientHandler({ action: ACTIONS.DELETE_ITEM, payload: { id: id, itemName: itemName, idRoom: idRoom } }); } }
           // onClick={()=>props.onDelete.bind(this, {id, idRoom, itemName})}
         >
           <FontAwesomeIcon icon={faTrash} />

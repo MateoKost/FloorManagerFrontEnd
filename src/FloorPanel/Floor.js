@@ -16,30 +16,14 @@ import SpinnerGroup from "../Utilities/SpinnerGroup";
 import "../Utilities/Spinner.css";
 
 const Floor = () => {
-  const { items, setSelectedRoom: filterItems } = useContext(ItemsContext);
+  const { items, selectedRoom, setSelectedRoom: filterItems } = useContext(ItemsContext);
   const { personnel, setSelectedRoom: filterPersonnel } =
     useContext(PersonnelContext);
 
-  const [selectedRoom, setRoom] = useState("");
-  // const [alertData, setAlertData] = useState("");
-
   const selectRoom = (roomId) => {
-    setRoom(roomId);
     filterItems(roomId);
     filterPersonnel(roomId);
   };
-
-  // const updateAlertData = (data, entity, type) => {
-  //   console.log(data, entity, type);
-  //   setAlertData({
-  //     alertData: {
-  //       data: data,
-  //       entity: entity,
-  //       type: type,
-  //       visibility: true,
-  //     },
-  //   });
-  // };
 
   return (
     <div className="container-fluid">
@@ -52,7 +36,7 @@ const Floor = () => {
         </div>
         <div className="col-lg-2 p-0"></div>
       </div>
-      <div className="row p-0 m-0">
+      <div className="row pt-4">
         {/* <AlertPanel {...alertData} /> */}
         <AlertPanel />
       </div>

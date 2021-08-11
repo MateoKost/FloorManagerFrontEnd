@@ -1,15 +1,5 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React  from "react";
 import '../App.css';
-import { Alert, Table, Button, Navbar } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faTrash,
-  faPen,
-  faChair,
-} from "@fortawesome/free-solid-svg-icons";
-
 import {
   BrowserRouter as Router,
   Route,

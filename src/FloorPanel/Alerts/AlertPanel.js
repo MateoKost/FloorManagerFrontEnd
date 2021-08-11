@@ -1,16 +1,17 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { UncontrolledAlert } from "reactstrap";
 
 import { ItemsContext } from "../../REST/Items";
 import { PersonnelContext } from "../../REST/Personnel";
 
 export const AlertPanel = (props) => {
-  const { data, entity, type, visibility } = props;
+  // const { data, entity, type, visibility } = props;
 
   // const { items, setSelectedRoom: filterItems } = useContext(ItemsContext);
-  // const { editPersonnelData, alertStatus } = useContext(PersonnelContext);
+  const { editItemData, alertStatus:itemStatus } = useContext(ItemsContext);
+  const { editPersonnelData, alertStatus:personnelStatus } = useContext(PersonnelContext);
 
-  const pre = (() => {
+  const pre = (type) => {
     switch (type) {
       case "success":
         return "Dodano";
@@ -21,32 +22,32 @@ export const AlertPanel = (props) => {
       default:
         return "";
     }
-  })();
+  };
 
-  const alertData = (() => {
+  const alertData = (entity, alertData) => {
     switch (entity) {
       case "item":
-        return `${data.itemName}`;
+        return ` przedmiot - ${ (alertData.id ? `[${alertData.id}] - ` : "") } ${alertData.itemName}`;
       case "soldier":
-        return `${data.rank} ${data.name} ${data.lastName}`;
+        return ` pracownika - ${alertData.rank} ${ (alertData.name ? alertData.name : "") } ${alertData.lastName}`;
       default:
         return "";
     }
-  })();
+  };
 
   return (
-    <div>
-      {visibility && (
-        <UncontrolledAlert color={type}>
-           <span>
-                {pre} <b>{alertData}</b> - pokój nr <b>{data.idRoom}</b>
+    <div className="col-12 p-12">
+      {itemStatus.visibility && (
+        <UncontrolledAlert color={itemStatus.type}>
+          <span>
+            {pre(itemStatus.type)} <b>{alertData(itemStatus.entity, editItemData)}</b> - pokój nr <b>{editItemData.idRoom}</b>
           </span>
         </UncontrolledAlert>
       )}
-            {visibility && (
-        <UncontrolledAlert color={type}>
-           <span>
-                {pre} <b>{alertData}</b> - pokój nr <b>{data.idRoom}</b>
+      {personnelStatus.visibility && (
+        <UncontrolledAlert color={personnelStatus.type}>
+          <span>
+            {pre(personnelStatus.type)} <b>{alertData(personnelStatus.entity, editPersonnelData)}</b> - pokój nr <b>{editPersonnelData.idRoom}</b>
           </span>
         </UncontrolledAlert>
       )}

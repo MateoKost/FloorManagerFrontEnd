@@ -1,24 +1,31 @@
 .floorGrid {
-    display: grid;
-    border: 1px solid #383e43;
-    grid-template-areas:
-      'r0 r4 s0 r8 r10 r14 s1 r18 r22'
-      'r2 r6 s0 r8 r12 r16 s1 r20 r22'
-      'c0 c0 c0 c0 c0 c0 c0 c0 c0'
-      'r1 r5 c1 r9 r11 r15 c2 r19 r23'
-      'r3 r7 c1 r9 r13 r17 c2 r21 r23'
-      ;
-      padding: 0px;
+  display: grid;
+  border: 1px solid #383e43;
+
+  grid-template-areas:
+    "r0 r4 s0 r8 r10 r14 s1 r18 r22"
+    "r2 r6 s0 r8 r12 r16 s1 r20 r22"
+    "c0 c0 c0 c0 c0 c0 c0 c0 c0"
+    "r1 r5 c1 r9 r11 r15 c2 r19 r23"
+    "r3 r7 c1 r9 r13 r17 c2 r21 r23";
+  padding: 0px;
+}
+
+.floorGrid > .room {
+  text-align: center;
+  font-size: 10;
+  border-width: 1px;
+}
+
+.floorGrid > .staircase {
+  text-align: center;
+  font-size: 10;
+}
+
+
+@media (max-width: 479px) {
+  .floorGrid > * {
+      font-size: 10px;
+      padding: 0;
   }
-  
-  .floorGrid > .room {
-      text-align: center;
-      font-size: 10;
-      border-width: 1px;
-  }
-  
-  .floorGrid > .staircase{
-    text-align: center;
-    font-size: 10;
-  }
-  
+}

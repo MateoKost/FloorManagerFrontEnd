@@ -16,14 +16,19 @@ import ranks from "./ranks";
 import { PersonnelContext } from "../../REST/Personnel";
 
 const EditPersonnelModal = () => {
-  const {editPersonnelModal, editPersonnelData, setEditPersonnelData, setEditPersonnelModal , clientHandler, ACTIONS } =
-    useContext(PersonnelContext);
+  const {
+    editPersonnelModal,
+    editPersonnelData,
+    setEditPersonnelData,
+    setEditPersonnelModal,
+    clientHandler,
+    ACTIONS,
+  } = useContext(PersonnelContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { name, lastName, rank, idRoom } = event.target.elements;
+    const { lastName, rank, idRoom } = event.target.elements;
     let params = {
-      // name: name.value,
       lastName: lastName.value,
       rank: rank.value,
       idRoom: parseInt(idRoom.value),
@@ -40,49 +45,67 @@ const EditPersonnelModal = () => {
       >
         <Form onSubmit={handleSubmit}>
           <ModalHeader toggle={() => setEditPersonnelModal(false)}>
-            Dodaj nowego pracownika
+            Edytuj pracownika
           </ModalHeader>
           <ModalBody>
-          <FormGroup>
-            
-
             <FormGroup>
-            <Label for="idRoom">Stopień</Label>
-            <Input
-              type="select"
-              name="rank"
-              id="rank"
-              required
-              placeholder="Stopień"
-              value={editPersonnelData.rank}
-              onChange={(e) => {
-                setEditPersonnelData({rank:e.target.value});
-                // this.setState({ editPersonnelData });
-              }}
-              >
-              {ranks.map((rank, i) => (
-                <option key={i}>{rank}</option>
-              ))}
-            </Input>
-          </FormGroup>
+              <FormGroup>
+                <Label for="idRoom">Stopień</Label>
+                <Input
+                  type="select"
+                  name="rank"
+                  id="rank"
+                  required
+                  placeholder="Stopień"
+                  value={editPersonnelData.rank}
+                  onChange={(e) => {
+                    setEditPersonnelData({ rank: e.target.value });
+                  }}
+                >
+                  {ranks.map((rank, i) => (
+                    <option key={i}>{rank}</option>
+                  ))}
+                </Input>
+              </FormGroup>
 
+              <FormGroup>
+                <Label for="name">Imię</Label>
+                <Input
+                  required
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Imię"
+                  value={editPersonnelData.name}
+                  disabled={true}
+                />
+              </FormGroup>
 
-
-            <FormGroup>
-              <Label for="name">Imię</Label>
-              <Input    required type="text" name="name" id="name" placeholder="Imię" value={editPersonnelData.name} disabled={true}/>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="lastName">Nazwisko</Label>
-              <Input    required type="text" name="lastName" id="lastName" placeholder="Nazwisko" value={editPersonnelData.lastName} disabled={true}/>
-            </FormGroup>
+              <FormGroup>
+                <Label for="lastName">Nazwisko</Label>
+                <Input
+                  required
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  placeholder="Nazwisko"
+                  value={editPersonnelData.lastName}
+                  disabled={true}
+                />
+              </FormGroup>
 
               <Label for="idRoom">Pomieszczenie</Label>
-              <Input    required type="number" name="idRoom" id="idRoom" placeholder="Pomieszczenie"value={editPersonnelData.idRoom} onChange={(e) => {
-                setEditPersonnelData({idRoom:e.target.value});
-                // this.setState({ editPersonnelData });
-              }}/>
+              <Input
+                required
+                type="number"
+                name="idRoom"
+                id="idRoom"
+                placeholder="Pomieszczenie"
+                value={editPersonnelData.idRoom}
+                onChange={(e) => {
+                  setEditPersonnelData({ idRoom: e.target.value });
+                }}
+              />
             </FormGroup>
           </ModalBody>
           <ModalFooter>
