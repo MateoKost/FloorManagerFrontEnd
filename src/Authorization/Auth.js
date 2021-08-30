@@ -19,11 +19,12 @@ export const AuthProvider = ({ children }) => {
     //   setCurrentUser(user)
     //   setPending(false);
     // });
+
   }, [localStorage]);
 
   useEffect(() => {
     currentUserDebtUpdated();
-  }, [currentUserChanged, currentUserData]);
+  }, [setCurrentUser,updateDebt]);
 
   function currentUserChanged() {
     let store = JSON.parse(localStorage.getItem("login"));
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     // alert(currentUserData.company)
     // alert(parseInt(currentUserData.company))
     // alert(currentUser.loginData.email)
-    alert(debt)
+    // alert(debt)
 
     let params2 = {
       email: currentUser.loginData.email,

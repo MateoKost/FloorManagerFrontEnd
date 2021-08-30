@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useContext, useReducer } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
-// import SpinnerGroup from "../Utilities/SpinnerGroup";
-import "../Utilities/Spinner.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../Authorization/Auth";
 
@@ -21,30 +19,18 @@ const ACTIONS = {
 
 export const PaymentProvider = ({ children }) => {
   const { currentUser, updateDebt } = useContext(AuthContext);
-
-  // const [items, dispatch ] = useReducer(reducer, {data:[], pending: true})
-  // const [items, setitems] = useState({ data: [], status: "pending" });
-  // const [selectedRoom, setSelectedRoom] = useState("");
-  // const [newItemModal, setNewItemModal] = useState(false);
-  // const [editItemModal, setEditItemModal] = useState(false);
   const [editPaymentData, setEditPaymentData] = useState({ id: "", cost: 0.0 });
   const [alertStatus, setAlertStatus] = useState({
     visibility: false,
-    entity: "item",
-    type: "success",
+    entity: "payment",
+    type: "info",
   });
 
-  // useEffect(() => {
-  //   clientHandler({action:ACTIONS.READ_ITEMS});
-  // }, [selectedRoom, alertStatus, currentUser]);
-
+  
   async function clientHandler({ action, payload }) {
     switch (action.type) {
       case ACTIONS.HANDLE_PAYMENT.type: {
         const { endpoint, method } = ACTIONS.HANDLE_PAYMENT;
-        // alert(payload.cost);
-        // alert(method);
-        // alert(endpoint + "/" + payload.cost)
 
         let resultId;
         let stripePromise = await loadStripe(
@@ -62,24 +48,35 @@ export const PaymentProvider = ({ children }) => {
             setEditPaymentData({ id: result.data.id, cost: payload.cost });
           })
           .then(() => {
+            let outcome;
             try {
               // outcome =
               stripePromise
                 .redirectToCheckout({
                   sessionId: resultId,
                 })
-                .then(() => {
-                  updateDebt(0);
-                  setAlertStatus({
-                    type: "success",
-                  });
-                });
+                // .then((result) => {
+                //   // alert("eureca!")
+                //   // outcome = result;
+                // });
             } catch (err) {
               setAlertStatus({
                 type: "danger",
+                visibility: true,
               });
             }
             
+            // if(outcome){
+            //   alert("eureca!")
+            //   updateDebt(0);
+            //   setAlertStatus({
+            //     type: "success",
+            //     visibility: true,
+            //   });
+            // }
+
+
+
           });
 
         // let outcome;
@@ -116,10 +113,10 @@ export const PaymentProvider = ({ children }) => {
         //   });
         // }
 
-        setAlertStatus({
-          visibility: true,
-          entity: "payment",
-        });
+        // setAlertStatus({
+        //   visibility: true,
+        //   entity: "payment",
+        // });
 
         //console.log(result);
 

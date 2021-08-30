@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
 import { UncontrolledAlert } from "reactstrap";
-
 import { ItemsContext } from "../../REST/Items";
 import { PersonnelContext } from "../../REST/Personnel";
 
-export const AlertPanel = (props) => {
-  // const { data, entity, type, visibility } = props;
-
-  // const { items, setSelectedRoom: filterItems } = useContext(ItemsContext);
+export const AlertPanel = () => {
   const { editItemData, alertStatus:itemStatus } = useContext(ItemsContext);
   const { editPersonnelData, alertStatus:personnelStatus } = useContext(PersonnelContext);
 
@@ -18,7 +14,7 @@ export const AlertPanel = (props) => {
       case "info":
         return "Przeniesiono";
       case "repair":
-          return "Naprawiono";
+        return "Naprawiono";
       case "warning":
         return "Usunięto";
       default:
