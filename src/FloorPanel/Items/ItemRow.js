@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faChair } from "@fortawesome/free-solid-svg-icons";
-import itemIconNames from "./IconNames";
+import itemIconNames from "../../Utilities/IconNames";
 import "../../Utilities/table.css"
 import { ItemsContext } from '../../REST/Items';
 

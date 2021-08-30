@@ -25,7 +25,7 @@ import "./NM.css";
 
 import { useHistory } from "react-router-dom";
 
-import { ModalContext } from "../Modals/ModalContext";
+import { ModalContext } from "../LandingPage/Modals/ModalContext";
 import { AuthContext } from "../Authorization/Auth";
 
 const dhda_banner = process.env.PUBLIC_URL + "/Assets/banner_epic.svg";
@@ -61,8 +61,9 @@ const NavMenu = () => {
                 label="Piętro"
               />
               <NMButton
-                disabled={true}
-                onClick={() => console.log("Warsztat")}
+                disabled={false}
+                // onClick={() => console.log("Warsztat")}
+                onClick={() => history.push("/workshop")}
                 icon={faHammer}
                 label="Warsztat"
               />

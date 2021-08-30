@@ -10,7 +10,7 @@ import {
   ModalFooter,
   Form,
 } from "reactstrap";
-import itemIconNames from "./IconNames";
+import itemIconNames from "../../Utilities/IconNames";
 
 import { ItemsContext } from "../../REST/Items";
 

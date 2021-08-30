@@ -14,12 +14,12 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
-import { React, useContext } from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
-import { AuthContext } from "../Authorization/Auth";
+import { AuthContext } from "../../Authorization/Auth";
 import { ModalContext } from "./ModalContext";
-import "../App.css";
+import "../../App.css";
 
 const SignInModal = () => {
   const handleLogin = async (event) => {
@@ -42,8 +42,9 @@ const SignInModal = () => {
   }
 
   return (
-    <div>
-      <Modal isOpen={signInModal} toggle={toggleSignInModal}>
+    // <div>
+
+       <Modal isOpen={signInModal} toggle={toggleSignInModal}>
         <ModalHeader
           cssModule={{ "modal-title": "w-100 text-center" }}
           toggle={toggleSignInModal}
@@ -115,8 +116,9 @@ const SignInModal = () => {
             </p>
           </FormGroup>
         </ModalBody>
-      </Modal>
-    </div>
+      </Modal> 
+    // </div>
   );
 };
-export default withRouter(SignInModal);
+export default SignInModal;
+// export default withRouter(SignInModal);

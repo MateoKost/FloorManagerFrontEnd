@@ -23,11 +23,12 @@ const ACTIONS = {
     method: "GET",
   },
   UPDATE_ITEM: { type: "edit-item", endpoint: serverURL + "/item", method:"PUT"},
+  REPAIR_ITEM: { type: "repait-item", endpoint: serverURL + "/item", method:"PUT"},
   DELETE_ITEM: { type: "delete-tem", endpoint: serverURL + "/item",  method:"DELETE"  },
 };
 
 export const ItemsProvider = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateDebt } = useContext(AuthContext);
 
   // const [items, dispatch ] = useReducer(reducer, {data:[], pending: true})
   const [items, setitems] = useState({ data: [], status: "pending" });
@@ -39,7 +40,7 @@ export const ItemsProvider = ({ children }) => {
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_ITEMS});
-  }, [selectedRoom, alertStatus]);
+  }, [selectedRoom, alertStatus, currentUser]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {
@@ -75,8 +76,18 @@ export const ItemsProvider = ({ children }) => {
         });
         break;
       }
+      case ACTIONS.REPAIR_ITEM.type: {
+        const { endpoint, method } = ACTIONS.REPAIR_ITEM;
+        await client(endpoint+"/"+payload.id, method, {body:payload}).then((result) => {
+          updateDebt(payload.cost)
+          setEditItemData({id: payload.id, itemName:payload.itemName, idRoom: payload.idRoom})
+          setAlertStatus({visibility:true, entity: "item", type: "repair"})
+        });
+        break;
+      }
       case ACTIONS.DELETE_ITEM.type: {
         const { endpoint, method } = ACTIONS.DELETE_ITEM;
+
         await client(endpoint+"/"+payload.id, method).then((result) => {
           // console.log(result);
           setEditItemData({id: payload.id, itemName:payload.itemName, idRoom: payload.idRoom})
@@ -89,7 +100,6 @@ export const ItemsProvider = ({ children }) => {
         return items;
     }
   }
-
 
   return (
     <ItemsContext.Provider

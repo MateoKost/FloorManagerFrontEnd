@@ -17,6 +17,8 @@ export const AlertPanel = (props) => {
         return "Dodano";
       case "info":
         return "Przeniesiono";
+      case "repair":
+          return "Naprawiono";
       case "warning":
         return "Usunięto";
       default:

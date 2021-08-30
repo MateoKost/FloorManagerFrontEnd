@@ -37,7 +37,7 @@ export const PersonnelProvider = ({ children }) => {
 
   useEffect(() => {
     clientHandler({action:ACTIONS.READ_PERSONNEL});
-  }, [selectedRoom, alertStatus]);
+  }, [selectedRoom, alertStatus, currentUser]);
 
   async function clientHandler({action, payload}) {
     switch (action.type) {

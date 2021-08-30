@@ -5,10 +5,10 @@ import AutoSlider from "./AutoSlider";
 
 import { Button } from "reactstrap";
 
-import SignInModal from "../Modals/SignInModal";
-import RegisterModal from "../Modals/RegisterModal";
+import SignInModal from "./Modals/SignInModal";
+import RegisterModal from "./Modals/RegisterModal";
 
-import { ModalContext } from "../Modals/ModalContext";
+import { ModalContext } from "./Modals/ModalContext";
 
 const LandingPage = () => {
   return (

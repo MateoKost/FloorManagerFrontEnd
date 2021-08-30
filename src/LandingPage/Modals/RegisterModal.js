@@ -14,12 +14,12 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
-import { React, useContext } from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
-import { AuthContext } from "../Authorization/Auth";
+import { AuthContext } from "../../Authorization/Auth";
 import { ModalContext } from "./ModalContext";
-import "../App.css";
+import "../../App.css";
 
 const RegisterModal = () => {
   const { currentUser, createUserWithEmailAndPassword } = useContext(
@@ -124,4 +124,5 @@ const RegisterModal = () => {
     </div>
   );
 };
-export default withRouter(RegisterModal);
+export default RegisterModal;
+// export default withRouter(RegisterModal);

@@ -1,11 +1,19 @@
 import axios from "axios";
 
 export async function client(endpoint, method, { body, ...customConfig } = {}) {
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
-  };
+  
+  let headers;
+  try {
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JSON.parse(localStorage.getItem("login")).store,
+    }
+  } catch(err) {
+    
+  }
+  // localStorage.getItem("login") & (
 
+  // )
   const config = {
     method: method,
     url: endpoint,
