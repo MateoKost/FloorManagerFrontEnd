@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 
 import "../Utilities/Spinner.css";
 
-import { AuthContext } from "../Authorization/Auth";
+import { AuthContext } from "./Authorization/Auth";
 
 import { client } from "./client";
 

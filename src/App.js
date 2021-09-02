@@ -3,19 +3,21 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import LandingPage from "./LandingPage/LandingPage";
-import Floor from "./FloorPanel/Floor";
-import Workshop from "./Workshop/Workshop";
+import LandingPage from "./Features/LandingPage/LandingPage";
+import Floor from "./Features/FloorPanel/Floor";
+import Workshop from "./Features/Workshop/Workshop";
+import Calendar from "./Features/Calendar/Calendar"
 
-import { AuthProvider } from "./Authorization/Auth";
-import PrivateRoute from "./Authorization/PrivateRoute";
+import { AuthProvider } from "./REST/Authorization/Auth";
+import PrivateRoute from "./REST/Authorization/PrivateRoute";
 
-import NavMenu from "./NavMenu/NavMenu";
-import { ModalProvider } from "./LandingPage/Modals/ModalContext";
+import NavMenu from "./Features/NavMenu/NavMenu";
+import { ModalProvider } from "./Features/LandingPage/Modals/ModalContext";
 
 import { ItemsProvider } from "./REST/Items";
 import { PersonnelProvider } from "./REST/Personnel";
 import { PaymentProvider } from "./REST/Payment";
+import { GCalendarProvider } from "./API/Gapi";
 
 function App() {
   return (
@@ -38,6 +40,9 @@ function App() {
                 </PaymentProvider>
               </PersonnelProvider>
             </ItemsProvider>
+            <GCalendarProvider>
+              <PrivateRoute path="/calendar" component={() => <Calendar />} />
+            </GCalendarProvider>
           </div>
         </Router>
       </AuthProvider>
